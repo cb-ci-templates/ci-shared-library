@@ -4,7 +4,7 @@ metadata:
 spec:
   containers:
     - name: maven
-      image: maven:3.6.3-jdk-8
+      image: maven:3-amazoncorretto-17
       #runAsUser: 1000
       command:
         - cat
@@ -15,7 +15,24 @@ spec:
 #      volumeMounts:
 #        - name: maven-cache
 #          mountPath: /tmp/.m2
-#  volumes:
-#    - name: maven-cache
-#      persistentVolumeClaim:
-#        claimName: maven-local-repo-cache
+    - name: kaniko
+      image: gcr.io/kaniko-project/executor:debug
+      imagePullPolicy: Always
+      command:
+        - /busybox/cat
+      tty: true
+      volumeMounts:
+        - name: jenkins-docker-cfg
+          mountPath: /kaniko/.docker
+  volumes:
+    #- name: maven-cache
+    #  persistentVolumeClaim:
+    #    claimName: maven-local-repo-cache
+    - name: jenkins-docker-cfg
+      projected:
+        sources:
+          - secret:
+              name: docker-credentials
+              items:
+                - key: .dockerconfigjson
+                  path: config.json

@@ -4,7 +4,7 @@ metadata:
 spec:
   containers:
     - name: maven
-      image: maven:3.3.9-jdk-8-alpine
+      image: maven:3-amazoncorretto-17
       runAsUser: 1000
       command:
         - cat
