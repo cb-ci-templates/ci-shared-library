@@ -1,4 +1,5 @@
-FROM jenkins/jnlp-slave:alpine
+FROM cloudbees/cloudbees-core-agent
+#https://docs.cloudbees.com/docs/cloudbees-ci-kb/latest/cloudbees-ci-on-modern-cloud-platforms/change-the-default-jnlp-image-for-kubernetes-agents-provisioning
 WORKDIR /usr/local/bin
 LABEL maintainerAndreas Caternberg <andreas.caternberg@gmail.com>
 
