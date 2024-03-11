@@ -2,7 +2,7 @@ def call(Map pipelineParams) {
     pipeline {
         agent {
             kubernetes {
-                yamlFile "resources/podtemplates/${pipelineParams.k8_agent_yaml}"
+                yaml libraryResource("podtemplates/${pipelineParams.k8_agent_yaml}")
             }
         }
         parameters {
