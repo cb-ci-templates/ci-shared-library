@@ -10,6 +10,11 @@ def call(Map pipelineParams) {
                     description: 'How should I greet the world?')
         }
         stages {
+            stage("Init") {
+                steps {
+                    init "./ci-config.yaml"
+                }
+            }
             stage('Say Hello') {
                 steps {
                     echo "Greetings: ${params.greeting}"
