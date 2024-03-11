@@ -6,7 +6,7 @@ def call(Map pipelineParams) {
             }
         }
         parameters {
-            string(name: 'greeting', defaultValue: "${pipelineParams.param_greeting}",
+            string(name: 'greeting', defaultValue: "${pipelineParams.param_greetings}",
                     description: 'How should I greet the world?')
         }
         stages {
