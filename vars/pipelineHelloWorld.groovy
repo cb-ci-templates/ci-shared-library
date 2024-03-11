@@ -12,7 +12,7 @@ def call(Map pipelineParams) {
         stages {
             stage('Say Hello') {
                 steps {
-                    echo '${params.greeting}'
+                    echo "Greetings: ${params.greeting}"
                     echo "${pipelineParams.app}"
                 }
             }
