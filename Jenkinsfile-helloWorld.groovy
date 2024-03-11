@@ -11,5 +11,4 @@ param_greetings : 'Hello World'
 """
 Map configMap = readYaml text: "${configYaml}"
 
-//pipelineHelloWorld (app:"HelloWorld",k8_agent_yaml:"podTemplate-curl.yaml",param_greetings:"Hello World")
 pipelineHelloWorld (configMap)
