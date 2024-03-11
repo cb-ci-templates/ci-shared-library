@@ -11,5 +11,5 @@ param_greetings : 'Hello World'
 """
 
 Map configMap = readYaml text: "${configYaml}"
-println ${configMap}
+println configMap
 pipelineHelloWorld (configMap)
