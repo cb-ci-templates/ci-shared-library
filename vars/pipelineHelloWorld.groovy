@@ -1,4 +1,4 @@
-def call(Map configMap) {
+def call(Map configMap){
     pipeline {
         agent {
             kubernetes {
@@ -18,6 +18,5 @@ def call(Map configMap) {
             }
         }
     }
-
 }
 
