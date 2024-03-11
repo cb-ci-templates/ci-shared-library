@@ -9,7 +9,7 @@ app : 'Hello World'
 k8_agent_yaml : 'podTemplate-curl.yaml'
 param_greetings : 'Hello World'
 """
-println "!!!!!!!!!!!!!!!"
+
 Map configMap = readYaml text: "${configYaml}"
-println "????????????"
+println ${configMap}
 pipelineHelloWorld (configMap)
