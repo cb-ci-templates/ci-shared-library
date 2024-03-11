@@ -1,5 +1,3 @@
-import de.caternberg.pipeline.helper.GlobalVars
-
 def call(Map pipelineParams) {
     //evaluate the body block, and collect configuration into the object
     //def config = [:]
