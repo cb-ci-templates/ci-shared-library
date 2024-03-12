@@ -19,7 +19,6 @@ def call(Map pipelineParams) {
                 }
             }
             stage('Say Hello') {
-                when ()
                 steps {
                     echo "Greetings: ${params.greeting}"
                     echo "${pipelineParams.app}"
