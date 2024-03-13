@@ -16,6 +16,17 @@ def call(stageList) {
         }
     }
 
+    def parallelBranches = stageList.collectEntries { n ->
+        [(n): {
+            stage(stageName) {
+                steps {
+                    sh "sleep 10"
+                    echo "Done"
+                }
+            }
+        }]
+    }
+
     // Execute parallel stages
-    parallel parallelStagesMap
+    parallel parallelBranches
 }
