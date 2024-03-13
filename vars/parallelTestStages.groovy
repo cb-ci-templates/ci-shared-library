@@ -1,12 +1,13 @@
 // Convert array of regions to map of stages
-def call(stageList) {
-    return stageList.collectEntries { stage ->
-        [
-                (stage): {
-                    stage("${stage}") {
-                        echo  "sample command ${stage}"
+def call(stages) {
+        stageList=stages.collectEntries { mystage ->
+            [
+                    (mystage): {
+                        stage("Deploy region ${mystage}") {
+                            echo  "sample test command ${mystage}"
+                        }
                     }
-                }
-        ]
-    }
-}
+            ]
+        }
+        parallel stageList
+ }
