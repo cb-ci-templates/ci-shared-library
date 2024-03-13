@@ -1,5 +1,6 @@
 def call(Map params) {
     //see https://github.com/goetzrieger/ansible-labs/blob/master/tower/ansible_tower_advanced.adoc
+    //TODO: use parameters
      return  ansibleTower(
             credential: '<CREDENTIAL_ID>',
             extraVars: '''{                        
