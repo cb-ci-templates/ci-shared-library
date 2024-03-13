@@ -1,6 +1,6 @@
 // Convert array of regions to map of stages
 def call(stageList) {
-    stages=stageList.collectEntries { stage ->
+    return stageList.collectEntries { stage ->
         [
                 (stage): {
                     stage("${stage}") {
@@ -9,5 +9,4 @@ def call(stageList) {
                 }
         ]
     }
-    parallel stages
 }
