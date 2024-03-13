@@ -18,7 +18,7 @@ def call(stageList) {
 
     def parallelBranches = stageList.collectEntries { n ->
         [(n): {
-            stage(stageName) {
+            stage(n) {
                 steps {
                     sh "sleep 10"
                     echo "Done"
