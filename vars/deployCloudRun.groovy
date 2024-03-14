@@ -1,8 +1,8 @@
 // vars/cloudRunDeploy.groovy
 
-def call (Map config){
+def call (){
     echo "CLOUDRUN"
-    echo "$config.deploykey1"
+    echo "${env.deployconfig}"
 
 }
 
