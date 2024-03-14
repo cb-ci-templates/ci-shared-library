@@ -2,7 +2,7 @@ def call(Map params) {
     //see https://github.com/goetzrieger/ansible-labs/blob/master/tower/ansible_tower_advanced.adoc
     //TODO: use parameters
      return  ansibleTower(
-            credential: '<CREDENTIAL_ID>',
+            credential: params.crdentialsID,
             extraVars: '''{                        
                                   extra_vars: {                        
                                     KEY1: "VAL1",                        
@@ -10,12 +10,12 @@ def call(Map params) {
                                     KEY3: "VAL3"                        
                                   }                        
                                 }''',
-            inventory: 'localhost',
-            jobTemplate: '146',
+            inventory: params.host,
+            jobTemplate: params.jobID,
             jobType: 'run',
             throwExceptionWhenFail: false,
-            towerCredentialsId: '<TOWER_CREDENTIAL>',
+            towerCredentialsId: params.towerCredentialsID,
             towerLogLevel: 'false',
-            towerServer: '<ANSIBLE_TOWER_NAME>' //references manage jenkins -> configure system -> ansible tower setup
+            towerServer: params.ansibletowername //references manage jenkins -> configure system -> ansible tower setup
     )
 }
