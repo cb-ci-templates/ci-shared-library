@@ -1,6 +1,13 @@
 // vars/cloudRunDeploy.groovy
+
+def call (Map config){
+    echo "CLOUDRUN"
+    echo "$config.deploykey1"
+
+}
+
 //TODO: need to be tested
-def call(Map config) {
+def cloudRun(Map config) {
     container(name: "${config.container}") {
         if (config.deployType == "gke") {
             sh "gcloud beta run deploy ${config.serviceName} --image ${config.image} --platform gke --cluster ${config.clusterName} --cluster-location ${config.region} --namespace ${config.namespace}"
