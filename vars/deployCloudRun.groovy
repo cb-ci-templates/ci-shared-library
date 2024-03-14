@@ -2,7 +2,8 @@
 
 def call (){
     echo "CLOUDRUN"
-    echo "${env.deployconfig}"
+    echo "deployConfigKey1: ${deployConfigKey1}"
+    echo "deployConfigHost: ${deployConfigHost}"
 
 }
 
