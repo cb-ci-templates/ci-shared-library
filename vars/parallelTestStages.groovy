@@ -1,9 +1,7 @@
 // Convert array of regions to map of stages
 def call(stages) {
-        //TODO: we need a 2 dimensional array
-        //[stage1][testparams1]
-        //[stageX][testparamsX]
-        stageList=stages.collectEntries { mystage ->
+        def myStages=stages
+        stageList=myStages.collectEntries { mystage ->
             [
                     (mystage): {
                         stage("${mystage}") {
