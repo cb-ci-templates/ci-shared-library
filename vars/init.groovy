@@ -12,18 +12,3 @@ def call(String file, Map defaults) {
     env.setProperty(p.key, p.value)
   }
 }
-
-def validatePropertyFile(String file){
-  //TODO: Impl: Can we use scheme validation?
-  return true;
-}
-
-def validateGlobalsSettings(Map defaults){
-  //TODO: Impl
-  return true;
-}
-
-def validateParameters(Map params){
-  //TODO: Impl
-  return true;
-}
