@@ -1,4 +1,4 @@
-def call (String file,Map defaults,map params){
+def call (String file,Map defaults,Map params){
     def result= validatePropertyFile(file) &&  validateTemplateGlobalSetting(defaults) &&  validateParameters(params)
     echo "validate ${result}"
     return result
