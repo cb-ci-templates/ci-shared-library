@@ -15,7 +15,7 @@ def validateBranchPropertiesExist(String branchPropertiesFile){
     sh """if test -f "${branchPropertiesFile}"
           then
             echo \"${branchPropertiesFile} exists on branch.\"
-          esle
+          else
             echo \\"${branchPropertiesFile} does not exists on branch.\\"
           fi
     """
