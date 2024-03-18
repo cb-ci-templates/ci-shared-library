@@ -3,11 +3,21 @@ def call (Map defaults){
     if (params!=null){
         result=validateParameters(params)
     }
+    if (defaults.branchPropertiesFile!=null){
+        result=validateBranchPropertiesExist (defaults.branchPropertiesFile)
+    }
     result=validateTemplateGlobalSetting(defaults) && result
     echo "validate ${result}"
     return result
 }
 
+def validateBranchPropertiesExist(String branchPropertiesFile){
+    if  (new File("${defaults.branchPropertiesFile}").exist()){
+        return true
+    }else {
+        return false
+    }
+}
 
 def validateTemplateGlobalSetting(Map defaults){
     //TODO: Impl
