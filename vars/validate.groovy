@@ -12,9 +12,11 @@ def call (Map defaults){
 }
 
 def validateBranchPropertiesExist(String branchPropertiesFile){
-    if  (new File("${defaults.branchPropertiesFile}").exist()){
+    if  (new File(branchPropertiesFile).exist()){
+        echo "branchPropertiesFile : ${branchPropertiesFile} exist on branch"
         return true
     }else {
+        echo "branchPropertiesFile : ${branchPropertiesFile} doesn`t exist on branch"
         return false
     }
 }
