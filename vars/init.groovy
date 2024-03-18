@@ -1,7 +1,7 @@
 // vars/defineProps.groovy
-def call(String file, Map defaults) {
+def call(Map defaults) {
   //use the Pipeline Utility Steps plugin readProperties step to read the .<app>.properties custom marker file
-  def props = readProperties defaults: defaults, file: file
+  def props = readProperties defaults: defaults, file: defaults.branchPropertiesFile
   //Set all properties to env
   for ( e in props ) {
     env.setProperty(e.key, e.value)
