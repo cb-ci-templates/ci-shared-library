@@ -12,13 +12,13 @@ def call (Map defaults){
 }
 
 def validateBranchPropertiesExist(String branchPropertiesFile){
-    if  (new File(branchPropertiesFile).exist()){
-        echo "branchPropertiesFile : ${branchPropertiesFile} exist on branch"
-        return true
-    }else {
-        echo "branchPropertiesFile : ${branchPropertiesFile} doesn`t exist on branch"
-        return false
-    }
+    sh """if test -f "${branchPropertiesFile}"
+          then
+            echo \"${branchPropertiesFile} exists on branch.\"
+          esle
+            echo \\"${branchPropertiesFile} does not exists on branch.\\"
+          fi
+    """
 }
 
 def validateTemplateGlobalSetting(Map defaults){
