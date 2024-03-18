@@ -1,5 +1,9 @@
-def call (String file,Map defaults,Map params){
-    def result=validateTemplateGlobalSetting(defaults) &&  validateParameters(params)
+def call (Map defaults){
+    def result=false
+    if (params!=null){
+        result=validateParameters(params)
+    }
+    result=validateTemplateGlobalSetting(defaults) && result
     echo "validate ${result}"
     return result
 }
