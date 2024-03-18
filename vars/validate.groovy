@@ -12,11 +12,12 @@ def call (Map defaults){
 }
 
 def validateBranchPropertiesExist(String branchPropertiesFile){
+    //TODO return true or false
     sh """if test -f "${branchPropertiesFile}"
           then
             echo \"${branchPropertiesFile} exists on branch.\"
           else
-            echo \\"${branchPropertiesFile} does not exists on branch.\\"
+            echo \"${branchPropertiesFile} does not exists on branch.\"
           fi
     """
 }
