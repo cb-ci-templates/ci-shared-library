@@ -6,10 +6,14 @@ def call(String fileName){
 
     // Parse YAML content
     //def yamlMap = yamlSlurper.parseText(yamlText)
-    Map yamlMap = readYaml(file: fileName)
+    node(){
+        Map yamlMap = readYaml(file: fileName)
+        return yamlMap
+    }
+
     // Print the Map
     println(yamlMap)
 
 
-    return yamlMap
+
 }
