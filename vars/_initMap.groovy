@@ -14,7 +14,7 @@ def call(String fileName){
 
 
     // Print the Map
-    println(yamlMap)
+    //println(yamlMap)
 
     def list = []
 
