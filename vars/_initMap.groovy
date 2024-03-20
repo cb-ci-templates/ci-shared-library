@@ -20,11 +20,9 @@ def call(String fileName){
 
     def dir = new File(".")
     dir.eachFileRecurse (FileType.FILES) { file ->
-        list << file
+        println file
     }
-    list.each {
-        println it.path
-    }
+
 
 
 }
