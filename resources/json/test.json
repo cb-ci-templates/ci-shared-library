@@ -1,6 +1,6 @@
 {
-    "id": "3",
+    "id": "1",
     "repo": "git@github.com:pipeline-demo-caternberg/pipeline-examples.git",
-    "key3": "value3",
-    "timeout": "30"
+    "key1": "value1",
+    "timeout": "10"
 }
