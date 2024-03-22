@@ -1,4 +1,4 @@
-def call(String ghtoken,String repo){t
+def call(String ghtoken,String repo){
     branches=sh(script: """
             curl -s -L \
              -H "Accept: application/vnd.github+json" \
