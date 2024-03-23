@@ -4,7 +4,7 @@ def call(String ghtoken,String repo){
              -H "Accept: application/vnd.github+json" \
              -H "Authorization: Bearer ${ghtoken}" \
              -H "X-GitHub-Api-Version: 2022-11-28" \
-             $repo  |jq -r '.[] | .name' | tr '\\n' ', ' | sed 's/,\$//'"""
+             $repo  |jq  '.[] | .name' | tr '\\n' ', ' | sed 's/,\$//'"""
             ,returnStdout: true)
     echo "BRANCHES: ${branches}"
     env.GIT_REPO_BRANCHES="${branches}"
