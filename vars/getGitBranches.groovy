@@ -7,6 +7,6 @@ def call(String ghtoken,String repo){
              $repo  |jq -r '.[] | .name' | tr '\\n' ', ' | sed 's/,\$//'"""
             ,returnStdout: true)
     echo "BRANCHES: ${branches}"
-    env.GIT_REPO_BRANCHES=${branches}
+    env.GIT_REPO_BRANCHES="${branches}"
     return branches
 }
