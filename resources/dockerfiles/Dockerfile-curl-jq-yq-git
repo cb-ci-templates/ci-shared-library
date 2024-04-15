@@ -13,6 +13,7 @@ RUN apk add --no-cache make \
     diffutils \
     jq \
     yq \
+    libxml2-utils \
     git
 
 RUN echo $PATH
