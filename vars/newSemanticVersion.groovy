@@ -1,5 +1,4 @@
 def call(Map params){
-    String newSemanticVersionScript = libraryResource 'scripts/newSemanticVersion.sh'
     writeFile encoding: 'utf-8', file: "${WORKSPACE}/nsv.sh", text: libraryResource ('scripts/newSemanticVersion.sh')
     def newSemanticVersion=sh(script: """
                                 chmod a+x ${WORKSPACE}/nsv.sh && ${WORKSPACE}/nsv.sh ${params.arg} ${params.version}
