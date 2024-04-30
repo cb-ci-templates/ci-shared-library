@@ -15,12 +15,14 @@ def call(pipelineParams) {
                     script {
                         script {
                             // Ensure file operations are executed within a node block
-                            config = readYaml file: pipelineParams.branchPropertiesFile
+                            config = initFromYaml pipelineParams.branchPropertiesFile
+                            //config = readYaml file: pipelineParams.branchPropertiesFile
                             echo "Initializing pipeline with config: ${config}"
                         }
                     }
                     // Use the configuration from the YAML file
                     echo "Initializing pipeline with config: ${config}"
+                    echo config
                 }
             }
             // Other stages of your pipeline

@@ -1,5 +1,6 @@
 
 def call(String configFileName) {
+    def valuesYaml=null
     try {
         //Load config
         valuesYaml = readYaml(file: "${configFileName}")
@@ -12,8 +13,8 @@ def call(String configFileName) {
         valuesYaml.environment.each { environmentVar ->
             evaluate("env."+environmentVar)
         }
-
     } catch (Exception e) {
         println "FileNotFound ${configFileName}"
     }
+    return valuesYaml
 }
