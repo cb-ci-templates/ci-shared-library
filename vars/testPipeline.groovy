@@ -1,7 +1,7 @@
 // my-shared-library/vars/testPipeline.groovy
 
 def call(pipelineParams) {
-
+    def config=null
 
     pipeline {
         agent {
@@ -15,7 +15,7 @@ def call(pipelineParams) {
                     script {
                         script {
                             // Ensure file operations are executed within a node block
-                            def config = readYaml file: pipelineParams.branchPropertiesFile
+                            config = readYaml file: pipelineParams.branchPropertiesFile
                             echo "Initializing pipeline with config: ${config}"
                         }
                     }
