@@ -22,7 +22,7 @@ def call(pipelineParams) {
                     }
                     // Use the configuration from the YAML file
                     echo "Initializing pipeline with config: ${config}"
-                    echo config
+                    echo (config.ciTemplate)
                 }
             }
             // Other stages of your pipeline
