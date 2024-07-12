@@ -20,6 +20,7 @@ def call(Map configDefaults) {
                         writeYaml file: 'ci-config-defaults.yaml', data: libraryResource("json/ci-config-defaults.yaml")
                         sh """
                             yq -m -x ${configDefaults.config.branchPropertiesFile} ci-config-defaults.yaml > config-merged.yaml
+                            cat config-merged.yaml
                         """
                         script {
                             config = readYaml file: config-merged.yaml
