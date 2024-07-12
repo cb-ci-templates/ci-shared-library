@@ -11,27 +11,9 @@ def call(Map configDefaults) {
                     }
                 }
                 steps {
-                    container("json-schema-validator") {
-                        script {
-                            config = init configDefaults
-                            env.MAVEN_IMAGE = config.build.maven.image
-                            //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
-                            writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
-                        }
-                    }
-                    container("yq") {
-                        writeYaml file: 'ci-config-defaults.yaml', data: libraryResource("json/ci-config-defaults.yaml")
-                        sh """
-                            cat ci-config-defaults.yaml
-                            cat ${configDefaults.branchPropertiesFile}                      
-                            yq eval ${configDefaults.branchPropertiesFile} ci-config-defaults.yaml > config-merged.yaml
-                            sed -i '/---/d' config-merged.yaml
-                            cat config-merged.yaml
-                        """
-                        script {
-                            config = readYaml file: "config-merged.yaml"
-                        }
-                    }
+                   script{
+                       config= init configDefaults
+                   }
                     container("envsubst") {
                         sh "ls -la && envsubst < agent.yaml > tmp-podagent.yaml"
                         script {
