@@ -20,11 +20,9 @@ def call(Map configDefaults) {
                         }
                     }
                     container("utils") {
-                        steps {
-                            sh "ls -la && envsubst < agent.yaml > tmp-podagent.yaml"
-                            script {
-                                agentYaml = readYaml file: "tmp-podagent.yaml"
-                            }
+                        sh "ls -la && envsubst < agent.yaml > tmp-podagent.yaml"
+                        script {
+                            agentYaml = readYaml file: "tmp-podagent.yaml"
                         }
                     }
                 }
