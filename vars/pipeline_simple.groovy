@@ -57,19 +57,18 @@ def call(Map configDefaults) {
 
                 agent {
                     kubernetes {
-                        //yaml libraryResource("podtemplates/podTemplate-envsubt-images.yaml")
                         yaml agentYaml
                     }
                 }
                 stages {
-                    stage("build") {
+                    stage("stage1") {
                         steps {
-                            sh "echo build "
+                            sh "echo stage1 "
                         }
                     }
-                    stage("deploy") {
+                    stage("stage2") {
                         steps {
-                            sh "echo deploy "
+                            sh "echo stage2 "
                         }
                     }
                     //                  }
