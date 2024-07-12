@@ -15,7 +15,8 @@ spec:
       securityContext:
         runAsUser: 1000
     - name: utils
-      image: mikefarah/yq
+      #image: mikefarah/yq
+      image: ubuntu
       command:
         - sleep
       args:
