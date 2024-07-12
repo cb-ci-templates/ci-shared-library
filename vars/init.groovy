@@ -3,7 +3,7 @@ def call(Map configDefaults) {
     container("json-schema-validator") {
         validate(configDefaults)
         script {
-            result = readYaml file: configDefaults.propertyFileName
+            result = readYaml file: configDefaults.branchPropertiesFile
             env.MAVEN_IMAGE = result.build.maven.image
             //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
             writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
