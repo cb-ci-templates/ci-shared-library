@@ -19,7 +19,7 @@ def call(Map configDefaults) {
                             writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
                         }
                     }
-                    */
+                    /*
                     container("yq") {
                         writeYaml file: 'ci-config-defaults.yaml', data: libraryResource("json/ci-config-defaults.yaml")
                         sh """
