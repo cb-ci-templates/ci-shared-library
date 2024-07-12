@@ -14,9 +14,7 @@ def call(Map configDefaults) {
                     container("json-schema-validator") {
                         script {
                             config = init configDefaults
-                            env.MAVEN_IMAGE = config.build.maven.image
-                            //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
-                            writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
+
                         }
                     }
                     /*
@@ -36,11 +34,11 @@ def call(Map configDefaults) {
                     }
                    */
                     container("envsubst") {
+                        env.MAVEN_IMAGE = config.build.maven.image
                         //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
                         writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
                         sh "ls -la && envsubst < agent.yaml > tmp-podagent.yaml"
                         script {
-                            env.MAVEN_IMAGE = config.build.maven.image
                             agentYaml = readYaml file: "tmp-podagent.yaml"
                         }
                         sh "echo $agentYaml"
