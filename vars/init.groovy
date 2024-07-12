@@ -13,12 +13,12 @@ def call(Map configDefaults) {
     container("yq") {
         writeYaml file: 'ci-config-defaults.yaml', data: libraryResource("json/ci-config-defaults.yaml")
         sh """
-                            cat ci-config-defaults.yaml
-                            cat ${configDefaults.branchPropertiesFile}                      
-                            yq eval ${configDefaults.branchPropertiesFile} ci-config-defaults.yaml > config-merged.yaml
-                            sed -i '/---/d' config-merged.yaml
-                            cat config-merged.yaml
-                        """
+            cat ci-config-defaults.yaml
+            cat ${configDefaults.branchPropertiesFile}                      
+            yq eval ${configDefaults.branchPropertiesFile} ci-config-defaults.yaml > config-merged.yaml
+            sed -i '/---/d' config-merged.yaml
+            cat config-merged.yaml
+        """
         script {
             result = readYaml file: "config-merged.yaml"
         }
