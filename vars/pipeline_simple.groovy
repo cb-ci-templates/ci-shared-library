@@ -10,16 +10,25 @@ def call(Map configDefaults) {
                         yaml libraryResource("podtemplates/podTemplate-init.yaml")
                     }
                 }
-                steps {
-                    script {
-                        config = init  configDefaults
-                        env.MAVEN_IMAGE=config.build.maven.image
-                        //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
-                        writeYaml file: 'agent.yaml', data:  libraryResource("podtemplates/podTemplate-envsubt-images.yaml")
-                        sh "ls -la && envsubst < agent.yaml > tmp-podagent.yaml"
-                        agentYaml=readYaml file: "tmp-podagent.yaml"
+                container("json-schema-validator"){
+                    steps {
+                        script {
+                            config = init  configDefaults
+                            env.MAVEN_IMAGE=config.build.maven.image
+                            //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
+                            writeYaml file: 'agent.yaml', data:  libraryResource("podtemplates/podTemplate-envsubt-images.yaml")
+                        }
                     }
                 }
+                container("utils"){
+                    steps {
+                        sh "ls -la && envsubst < agent.yaml > tmp-podagent.yaml"
+                        script {
+                            agentYaml=readYaml file: "tmp-podagent.yaml"
+                        }
+                    }
+                }
+
             }
             stage('CI') {
                 //           parallel {
