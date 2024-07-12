@@ -14,24 +14,27 @@ def call(Map configDefaults) {
                     container("json-schema-validator") {
                         script {
                             config = init configDefaults
+                            env.MAVEN_IMAGE = config.build.maven.image
+                            //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
+                            writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
                         }
                     }
+                    /*
                     container("yq") {
                         writeYaml file: 'ci-config-defaults.yaml', data: libraryResource("json/ci-config-defaults.yaml")
                         //yq e -n  ${configDefaults.branchPropertiesFile} ci-config-defaults.yaml > config-merged.yaml
                         sh """
                             cat ci-config-defaults.yaml
-                            cat ${configDefaults.branchPropertiesFile} 
+                            cat ${configDefaults.branchPropertiesFile}
                             cat ${configDefaults.branchPropertiesFile} > config-merged.yaml
                             cat ci-config-defaults.yaml >> config-merged.yaml
                             cat config-merged.yaml
                         """
-                       /* script {
+                        script {
                             config = readYaml file: "config-merged.yaml"
                         }
-
-                        */
                     }
+                    */
                     container("envsubst") {
                         //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
                         writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
