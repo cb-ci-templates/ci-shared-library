@@ -1,3 +1,4 @@
+---
 build:
   maven:
     podyaml: podTemplate-maven.yaml
