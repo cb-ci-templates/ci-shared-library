@@ -21,12 +21,13 @@ def call(Map configDefaults) {
                         //yq e -n  ${configDefaults.branchPropertiesFile} ci-config-defaults.yaml > config-merged.yaml
                         sh """
                             cat ci-config-defaults.yaml
-                            cat  ${configDefaults.branchPropertiesFile} > config-merged.yaml
-                            cat  ci-config-defaults.yaml >> config-merged.yaml
+                            cat ${configDefaults.branchPropertiesFile} 
+                            cat ${configDefaults.branchPropertiesFile} > config-merged.yaml
+                            cat ci-config-defaults.yaml >> config-merged.yaml
                             cat config-merged.yaml
                         """
                         script {
-                            config = readYaml file: config-merged.yaml
+                            config = readYaml file: "config-merged.yaml"
                         }
                     }
                     container("envsubst") {
