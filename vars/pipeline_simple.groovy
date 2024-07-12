@@ -26,9 +26,11 @@ def call(Map configDefaults) {
                             cat ci-config-defaults.yaml >> config-merged.yaml
                             cat config-merged.yaml
                         """
-                        script {
+                       /* script {
                             config = readYaml file: "config-merged.yaml"
                         }
+
+                        */
                     }
                     container("envsubst") {
                         //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
