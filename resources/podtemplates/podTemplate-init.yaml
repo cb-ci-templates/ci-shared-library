@@ -1,0 +1,16 @@
+kind: Pod
+metadata:
+  name: ci-init
+apiVersion: v1
+spec:
+  containers:
+    - name: shell
+      image: 3scale/ajv
+      command:
+        - sleep
+      args:
+        - infinity
+      tty: true
+      workingDir: "/home/jenkins/agent"
+      securityContext:
+        runAsUser: 1000
