@@ -27,6 +27,7 @@ def call(Map configDefaults) {
                             #cat ${configDefaults.branchPropertiesFile} > config-merged.yaml
                             #cat ci-config-defaults.yaml >> config-merged.yaml
                             yq eval ${configDefaults.branchPropertiesFile} ci-config-defaults.yaml > config-merged.yaml
+                            sed -i '/---/d' config-merged.yaml
                             cat config-merged.yaml
                         """
                          script {
