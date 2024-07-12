@@ -1,0 +1,6 @@
+build:
+  maven:
+    podyaml: podTemplate-maven.yaml
+    steps:
+      - "mvn version"
+      - "mvn clean install"
