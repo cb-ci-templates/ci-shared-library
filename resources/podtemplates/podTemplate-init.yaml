@@ -14,9 +14,19 @@ spec:
       workingDir: "/home/jenkins/agent"
       securityContext:
         runAsUser: 1000
-    - name: utils
+    - name: envsubst
       #image: mikefarah/yq
       image: dibi/envsubst
+      command:
+        - sleep
+      args:
+        - infinity
+      tty: true
+      workingDir: "/home/jenkins/agent"
+      securityContext:
+        runAsUser: 1000
+    - name: yq
+      image: mikefarah/yq
       command:
         - sleep
       args:
