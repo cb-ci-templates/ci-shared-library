@@ -4,7 +4,7 @@ metadata:
 spec:
   containers:
     - name: maven
-      image: ${env.MAVEN_IMAGE}
+      image: ${MAVEN_IMAGE}
       #runAsUser: 1000
       command:
         - cat
