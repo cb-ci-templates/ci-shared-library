@@ -40,6 +40,7 @@ def call(Map configDefaults) {
                             env.MAVEN_IMAGE = config.build.maven.image
                             agentYaml = readYaml file: "tmp-podagent.yaml"
                         }
+                        sh "echo $agentYaml"
                     }
                 }
             }
