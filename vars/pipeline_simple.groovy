@@ -1,6 +1,6 @@
 def call(Map configDefaults) {
-    def config=null
-    def agentYaml=null
+    def config = null
+    def agentYaml = null
     pipeline {
         agent none
         stages {
@@ -10,25 +10,24 @@ def call(Map configDefaults) {
                         yaml libraryResource("podtemplates/podTemplate-init.yaml")
                     }
                 }
-                container("json-schema-validator"){
-                    steps {
+                steps {
+                    container("json-schema-validator") {
                         script {
-                            config = init  configDefaults
-                            env.MAVEN_IMAGE=config.build.maven.image
+                            config = init configDefaults
+                            env.MAVEN_IMAGE = config.build.maven.image
                             //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
-                            writeYaml file: 'agent.yaml', data:  libraryResource("podtemplates/podTemplate-envsubt-images.yaml")
+                            writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubt-images.yaml")
+                        }
+                    }
+                    container("utils") {
+                        steps {
+                            sh "ls -la && envsubst < agent.yaml > tmp-podagent.yaml"
+                            script {
+                                agentYaml = readYaml file: "tmp-podagent.yaml"
+                            }
                         }
                     }
                 }
-                container("utils"){
-                    steps {
-                        sh "ls -la && envsubst < agent.yaml > tmp-podagent.yaml"
-                        script {
-                            agentYaml=readYaml file: "tmp-podagent.yaml"
-                        }
-                    }
-                }
-
             }
             stage('CI') {
                 //           parallel {
