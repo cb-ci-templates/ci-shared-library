@@ -15,10 +15,10 @@ def call(Map configDefaults) {
                         config = init  configDefaults
                         env.MAVEN_IMAGE=config.build.maven.image
                         //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
+                        writeYaml file: 'agent.yaml', data:  libraryResource("podtemplates/podTemplate-envsubt-images.yaml")
+                        sh "ls -la && envsubt < agent.yaml > tmp-podagent.yaml"
+                        agentYaml=readYaml file: "tmp-podagent.yaml"
                     }
-                    writeYaml file: 'agent.yaml', data:  libraryResource("podtemplates/podTemplate-envsubt-images.yaml")
-                    sh "ls -la && envsubt < agent.yaml > tmp-podagent.yaml"
-                    agentYaml=readYaml file: "tmp-podagent.yaml"
                 }
             }
             stage('CI') {
