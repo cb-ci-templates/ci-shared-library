@@ -57,10 +57,7 @@ def call(Map configDefaults) {
                             parallel(
                                     a: {
                                         container("maven") {
-                                            ansiColor('vga') {
-                                                echo '\033[42m\033[97mThread A green background\033[0m'
-                                            }
-                                            //echo "This is branch a"
+                                            echo "This is branch a"
                                         }
                                     },
                                     b: {
