@@ -19,22 +19,22 @@ def call(Map configDefaults) {
                             writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
                         }
                     }
-                    /*
+                    */
                     container("yq") {
                         writeYaml file: 'ci-config-defaults.yaml', data: libraryResource("json/ci-config-defaults.yaml")
-                        //yq e -n  ${configDefaults.branchPropertiesFile} ci-config-defaults.yaml > config-merged.yaml
                         sh """
                             cat ci-config-defaults.yaml
-                            cat ${configDefaults.branchPropertiesFile}
+                            cat ${configDefaults.branchPropertiesFile} 
+                            #yq e -n  ${configDefaults.branchPropertiesFile} ci-config-defaults.yaml > config-merged.yaml
                             cat ${configDefaults.branchPropertiesFile} > config-merged.yaml
                             cat ci-config-defaults.yaml >> config-merged.yaml
                             cat config-merged.yaml
                         """
-                        script {
-                            config = readYaml file: "config-merged.yaml"
-                        }
+                         script {
+                             config = readYaml file: "config-merged.yaml"
+                         }
                     }
-                    */
+                   */
                     container("envsubst") {
                         //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
                         writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
