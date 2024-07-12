@@ -1,7 +1,7 @@
 build:
   maven:
-    podyaml: podTemplate-maven.yaml
-    image: maven:3-amazoncorretto-17
+    podyaml: "podTemplate-maven.yaml"
+    image: "maven:3-amazoncorretto-17"
     steps:
       - "mvn version"
       - "mvn clean install"
