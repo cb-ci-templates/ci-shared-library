@@ -16,7 +16,7 @@ def call(Map configDefaults) {
                             config = init configDefaults
                             env.MAVEN_IMAGE = config.build.maven.image
                             //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
-                            writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubt-images.yaml")
+                            writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
                         }
                     }
                     container("utils") {
