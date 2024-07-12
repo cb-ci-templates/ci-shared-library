@@ -1,13 +1,14 @@
 def call(Map configDefaults) {
     def config=null
     pipeline {
-        agent {
-            kubernetes {
-                yaml libraryResource("podtemplates/podTemplate-init.yaml")
-            }
-        }
+        agent none
         stages {
             stage('Init') {
+                agent {
+                    kubernetes {
+                        yaml libraryResource("podtemplates/podTemplate-init.yaml")
+                    }
+                }
                 steps {
                     script {
                         config = init  configDefaults
