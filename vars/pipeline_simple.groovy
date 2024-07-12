@@ -21,7 +21,9 @@ def call(Map configDefaults) {
                         sh """
                             yq -m -x ${configDefaults.config.branchPropertiesFile} ci-config-defaults.yaml > config-merged.yaml
                         """
-                        config = readYaml file: config-merged.yaml
+                        script {
+                            config = readYaml file: config-merged.yaml
+                        }
                     }
                     container("envsubst") {
                         env.MAVEN_IMAGE = config.build.maven.image
