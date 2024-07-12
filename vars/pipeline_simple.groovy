@@ -42,16 +42,40 @@ def call(Map configDefaults) {
                             sh "echo build "
                         }
                     }
-                    stage("deploy") {
+                    stage("create image") {
                         steps {
-                            sh "echo deploy "
+                            sh "echo image "
+                        }
+                    }
+                    stage("test") {
+                        steps {
+                            sh "echo image "
+                        }
+                    }
+                    stage("qa scans") {
+                        steps {
+                            parallel(
+                                    a: {
+                                        container("maven") {
+                                            ansiColor('vga') {
+                                                echo '\033[42m\033[97mThread A green background\033[0m'
+                                            }
+                                            //echo "This is branch a"
+                                        }
+                                    },
+                                    b: {
+                                        container("maven") {
+                                            echo "This is branch b"
+                                        }
+                                    }
+                            )
                         }
                     }
                     //                  }
 //                }
                 }
             }
-            stage('CI-image-envsubt') {
+            stage('CD-image-envsubt') {
                 //           parallel {
                 //                stage ("runci"){
 
@@ -61,14 +85,14 @@ def call(Map configDefaults) {
                     }
                 }
                 stages {
-                    stage("stage1") {
+                    stage("deploy") {
                         steps {
-                            sh "echo stage1 "
+                            sh "echo deploy "
                         }
                     }
-                    stage("stage2") {
+                    stage("test") {
                         steps {
-                            sh "echo stage2 "
+                            sh "echo test "
                         }
                     }
                     //                  }
