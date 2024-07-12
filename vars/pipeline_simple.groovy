@@ -12,6 +12,8 @@ def call(Map configDefaults) {
                 steps {
                     script {
                         config = init  configDefaults
+                        env.MAVEN_IMAGE=config.build.maven.image
+                        //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
                     }
                     sh 'ls -la'
                 }
@@ -40,7 +42,30 @@ def call(Map configDefaults) {
 //                }
                 }
             }
+            stage('CI-image-envsubt') {
+                //           parallel {
+                //                stage ("runci"){
+
+                agent {
+                    kubernetes {
+                        yaml libraryResource("podtemplates/podTemplate-envsubt-images.yaml")
+                    }
+                }
+                stages {
+                    stage("build") {
+                        steps {
+                            sh "echo build "
+                        }
+                    }
+                    stage("deploy") {
+                        steps {
+                            sh "echo deploy "
+                        }
+                    }
+                    //                  }
+//                }
+                }
+            }
         }
     }
-
 }
