@@ -19,7 +19,7 @@ def call(Map configDefaults) {
                             writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
                         }
                     }
-                    container("utils") {
+                    container("envsubst") {
                         sh "ls -la && envsubst < agent.yaml > tmp-podagent.yaml"
                         script {
                             agentYaml = readYaml file: "tmp-podagent.yaml"
