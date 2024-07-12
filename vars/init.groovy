@@ -1,7 +1,7 @@
 def call(Map configDefaults) {
     def result=null
     container("json-schema-validator") {
-        validate(config)
+        validate(configDefaults)
         script {
             result = readYaml file: configDefaults.propertyFileName
             env.MAVEN_IMAGE = result.build.maven.image
