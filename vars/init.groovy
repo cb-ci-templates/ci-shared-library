@@ -13,23 +13,3 @@ def initYaml(String propertyFileName) {
     def configYaml = readYaml file: propertyFileName
     return configYaml
 }
-
-
-def initProperties(String propertyFileName) {
-    try{
-        //use the Pipeline Utility Steps plugin readProperties step to read the .<app>.properties custom marker file
-        echo "INIT from Branchproperties: ${propertyFileName}"
-        def props = readProperties defaults: parameters, file: propertyFileName
-        //Set all properties to env
-        for (e in props) {
-            env.setProperty(e.key, e.value)
-        }
-        //Expose all parameters to env
-        for (p in params) {
-            echo "set parameter ${p.key}:${p.value} to environment"
-            env.setProperty(p.key, p.value)
-        }
-    }catch(FileNotFoundException e){
-        error"File ${propertyFileName} not found on branch"
-    }
-}

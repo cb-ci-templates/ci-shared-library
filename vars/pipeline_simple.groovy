@@ -12,7 +12,7 @@ def call(Map configDefaults) {
                     script {
                         config = init  configDefaults
                     }
-                    sh 'hostname'
+                    sh 'ls -la'
                 }
             }
             stage('CI') {
