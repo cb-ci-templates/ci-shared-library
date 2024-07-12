@@ -16,7 +16,7 @@ spec:
         runAsUser: 1000
     - name: utils
       #image: mikefarah/yq
-      image: ubuntu
+      image: dibi/envsubst
       command:
         - sleep
       args:
