@@ -19,6 +19,18 @@ def call(Map configDefaults) {
                             writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
                         }
                     }
+                    container("yq") {
+                        writeYaml file: 'ci-config-defaults.yaml', data: libraryResource("json/ci-config-defaults.yaml")
+                        sh """
+                            cat ci-config-defaults.yaml
+                            cat ${configDefaults.branchPropertiesFile}                      
+                            yq eval ${configDefaults.branchPropertiesFile} ci-config-defaults.yaml > config-merged.yaml
+                            cat config-merged.yaml
+                        """
+                        script {
+                            config = readYaml file: "config-merged.yaml"
+                        }
+                    }
                     container("envsubst") {
                         sh "ls -la && envsubst < agent.yaml > tmp-podagent.yaml"
                         script {
