@@ -1,5 +1,6 @@
 def call(Map configDefaults) {
     def config=null
+    def agentYaml=null
     pipeline {
         agent none
         stages {
@@ -15,7 +16,9 @@ def call(Map configDefaults) {
                         env.MAVEN_IMAGE=config.build.maven.image
                         //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
                     }
-                    sh 'ls -la'
+                    writeYaml file: 'agent.yaml', data:  libraryResource("podtemplates/podTemplate-envsubt-images.yaml")
+                    sh "ls -la && envsubt < agent.yaml > tmp-podagent.yaml"
+                    agentYaml=readYaml file: "tmp-podagent.yaml"
                 }
             }
             stage('CI') {
@@ -48,7 +51,8 @@ def call(Map configDefaults) {
 
                 agent {
                     kubernetes {
-                        yaml libraryResource("podtemplates/podTemplate-envsubt-images.yaml")
+                        //yaml libraryResource("podtemplates/podTemplate-envsubt-images.yaml")
+                        yaml agentYaml
                     }
                 }
                 stages {
