@@ -38,7 +38,7 @@ def call(Map configDefaults) {
                         writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
                         sh '''
                             ls -la 
-                            catagent.yaml
+                            cat agent.yaml
                             envsubst < agent.yaml > tmp-podagent.yaml
                             cat tmp-podagent.yaml
                         '''
