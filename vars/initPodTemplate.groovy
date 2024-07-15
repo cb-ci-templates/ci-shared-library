@@ -10,6 +10,7 @@ def call(Map config) {
             cat agent.yaml
             envsubst < agent.yaml  > ${config.dynamicPodTemplateFile}
             sed -i '1d' ${config.dynamicPodTemplateFile} #workartund to remove "---"
+            sed -i '|' ${config.dynamicPodTemplateFile} #workartund to remove "|"
             cat ${config.dynamicPodTemplateFile}
         '''
         //writeYaml file: config.dynamicPodTemplateFile , data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
