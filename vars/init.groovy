@@ -18,7 +18,6 @@ def call(Map configDefaults) {
         """
         result = readYaml file: "config-merged.yaml"
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
-        agentYaml = readYaml file: "tmp-podagent.yaml"
         return result
     }
 }
