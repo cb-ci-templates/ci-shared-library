@@ -9,6 +9,7 @@ def call(Map config) {
             ls -la 
             cat agent.yaml
             envsubst < agent.yaml > tmp-podagent.yaml
+            sed -i '1d' tmp-podagent.yaml
             ls -la            
          """
         //#sed -i '1d' tmp-podagent.yaml #workartund
