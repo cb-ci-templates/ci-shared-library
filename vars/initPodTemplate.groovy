@@ -27,47 +27,7 @@ def call(Map config) {
          '''
          */
     }
-    Map tmpAgent="""---
-kind: Pod
-metadata:
-  name: maven
-spec:
-  containers:
-    - name: maven
-      image: ${config.build.maven.image}
-      #runAsUser: 1000
-      command:
-        - cat
-      tty: true
-      workingDir: "/home/jenkins/agent"
-      #securityContext:
-        #runAsUser: 1000
-#      volumeMounts:
-#        - name: maven-cache
-#          mountPath: /tmp/.m2
-    - name: kaniko
-      image: gcr.io/kaniko-project/executor:debug
-      imagePullPolicy: Always
-      command:
-        - /busybox/cat
-      tty: true
-      volumeMounts:
-        - name: jenkins-docker-cfg
-          mountPath: /kaniko/.docker
-  volumes:
-    #- name: maven-cache
-    #  persistentVolumeClaim:
-    #    claimName: maven-local-repo-cache
-    - name: jenkins-docker-cfg
-      projected:
-        sources:
-          - secret:
-              name: docker-credentials
-              items:
-                - key: .dockerconfigjson
-                  path: config.json
-    """
-    return tmpAgent
+    return agentYaml
 }
 
 
