@@ -14,12 +14,13 @@ def call(Map config) {
             sed -i '1d' agentTemplate.yaml 
             cat agentTemplate.yaml
             envsubst < agentTemplate.yaml |yq > gen-agentTemplate.yaml
+            cat gen-agentTemplate.yaml
             ls -la            
         """
         //#sed -i '1d' tmp-podagent.yaml #workartund
         agentYaml = readYaml file: 'gen-agentTemplate.yaml'
-        println "GEN-AGENT"
-        println agentYaml
+        //println "GEN-AGENT"
+        //println agentYaml
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
 
         /* sh '''
