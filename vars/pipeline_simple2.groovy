@@ -23,8 +23,47 @@ def call(Map configDefaults) {
 
                 agent {
                     kubernetes {
-                        yaml agentYaml
-                        //yaml libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
+                        yaml """
+                            kind: Pod
+metadata:
+  name: maven
+spec:
+  containers:
+    - name: maven
+      image: "${env.MAVEN_IMAGE}"
+      #runAsUser: 1000
+      command:
+        - cat
+      tty: true
+      workingDir: "/home/jenkins/agent"
+      #securityContext:
+        #runAsUser: 1000
+#      volumeMounts:
+#        - name: maven-cache
+#          mountPath: /tmp/.m2
+    - name: kaniko
+      image: gcr.io/kaniko-project/executor:debug
+      imagePullPolicy: Always
+      command:
+        - /busybox/cat
+      tty: true
+      volumeMounts:
+        - name: jenkins-docker-cfg
+          mountPath: /kaniko/.docker
+  volumes:
+    #- name: maven-cache
+    #  persistentVolumeClaim:
+    #    claimName: maven-local-repo-cache
+    - name: jenkins-docker-cfg
+      projected:
+        sources:
+          - secret:
+              name: docker-credentials
+              items:
+                - key: .dockerconfigjson
+                  path: config.json
+
+                        """
                     }
                 }
                 stages {
