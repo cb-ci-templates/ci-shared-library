@@ -13,7 +13,7 @@ def call(Map config) {
             #sed -i "s/^  //g" ${podTemplateFilePath}
             #sed -i '1d' ${podTemplateFilePath}
             #cat ${podTemplateFilePath}
-            echo $agentPod
+            echo ${agentPod}
             echo ${agentPod} |envsubst > gen-agentTemplate.yaml
             cat gen-agentTemplate.yaml            
         """
