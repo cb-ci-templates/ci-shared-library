@@ -17,8 +17,10 @@ def call(Map config) {
             diff -u gen-agentTemplate.yaml ${podTemplateFilePath}
             ls -la            
         """
+        result = sh(returnStdout: true, script: "yq gen-agentTemplate.yaml")
+
         //#sed -i '1d' tmp-podagent.yaml #workartund
-        result = readYaml file: 'gen-agentTemplate.yaml'
+        //result = readYaml file: 'gen-agentTemplate.yaml'
         echo "ECHO"
         echo "${result.metadata.name}"
         //println "GEN-AGENT"
