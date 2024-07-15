@@ -13,9 +13,16 @@ def call(Map config) {
         //agentPod = replaceTokens(agentPod, replacements)
         writeYaml file: podTemplateFilePath , data: agentPod
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
+
+
+        //Test code below doesnt work yet
         // Function to check if a YAML path exists
         def images=sh(script: """
-                yq -o=json '.' ${podTemplateFilePath} |jq -r 'paths |join(".")' |grep -E "build.*.image" |tr "\\n" ","
+                set -x
+                for img in \$(yq -o=json '.' agentTemplate.yaml |jq -r 'paths |join(".")' |grep -E "build.*.image")
+                do
+                    echo \$img
+                done
             """,returnStdout: true)
         println "IMAGES"
         println images
