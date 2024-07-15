@@ -34,7 +34,6 @@ metadata:
 spec:
   containers:
     - name: maven
-      #image: ${env.MAVEN_IMAGE:-maven:3-amazoncorretto-17}
       image: "${env.MAVEN_IMAGE}"
       #runAsUser: 1000
       command:
