@@ -15,6 +15,8 @@ def call(Map config) {
             ls -la        
             cat ${podTemplateFilePath} |envsubst > gen-agentTemplate.yaml
             ls -la
+            sed -i "s/^  //g" ${podTemplateFilePath}
+            sed -i '1d' ${podTemplateFilePath}
             cat gen-agentTemplate.yaml            
         """
         /*
