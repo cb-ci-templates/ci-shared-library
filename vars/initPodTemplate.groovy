@@ -8,14 +8,14 @@ def call(Map config) {
         // Define the path to your template file
         def podTemplateFilePath = 'agentTemplate.yaml'
         def agentPod=libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
-        /*   .replace('\${MAVEN_IMAGE}',config.build.maven.image)
-                .replace('\${GRADLE_IMAGE}',config.build.maven.image)
-*/
+                   .replace('\${MAVEN_IMAGE}',config.build.maven.image)
+                   .replace('\${GRADLE_IMAGE}',config.build.maven.image)
+
         // Function to replace tokens using a map
 
 
 // Replace tokens
-        agentPod = replaceTokens(agentPod, replacements)
+        //agentPod = replaceTokens(agentPod, replacements)
         writeYaml file: podTemplateFilePath, data: agentPod
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
         return agentPod
