@@ -19,6 +19,8 @@ def call(Map config) {
         """
         //#sed -i '1d' tmp-podagent.yaml #workartund
         result = readYaml file: 'gen-agentTemplate.yaml'
+        echo "ECHO"
+        echo "${result.metadata.name}"
         //println "GEN-AGENT"
         //println result
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
