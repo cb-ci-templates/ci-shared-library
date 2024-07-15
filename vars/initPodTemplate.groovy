@@ -11,7 +11,7 @@ def call(Map config) {
         sh """
             set -x
             ls -la        
-            echo ${agentPod} |envsubst > gen-agentTemplate.yaml
+            cat ${agentPod} |envsubst > gen-agentTemplate.yaml
             ls -la
             cat gen-agentTemplate.yaml            
         """
