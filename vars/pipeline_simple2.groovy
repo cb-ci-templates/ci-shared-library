@@ -12,10 +12,10 @@ def call(Map configDefaults) {
                 }
                 steps {
                     script {
-                        config = init configDefaults
+                        config=init configDefaults
+                        agentYaml=initPodTemplate config
                     }
-                    initPodTemplate config
-                    sh "cat ${config.dynamicPodTemplateFile}"
+                    sh "echo ${agentYaml}"
                 }
             }
             stage('CI') {
@@ -67,8 +67,8 @@ def call(Map configDefaults) {
 
                 agent {
                     kubernetes {
-                        //yaml agentYaml
-                        yamlFile config.dynamicPodTemplateFile
+                        yaml agentYaml
+                        //yamlFile config.dynamicPodTemplateFile
                     }
                 }
                 stages {
