@@ -6,11 +6,11 @@ def call(Map config) {
         //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
         writeYaml file: 'agentTemplate.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
         sh """
-            ls -la 
+            ls -la
+            sed -i "s/^  //g" agentTemplate.yaml 
             cat agentTemplate.yaml
             envsubst < agentTemplate.yaml > gen-agentTemplate.yaml
-            sed -i '1d' gen-agentTemplate.yaml
-            sed -i "s/^  //g" gen-agentTemplate.yaml
+            #sed -i '1d' gen-agentTemplate.yaml
             ls -la            
          """
         //#sed -i '1d' tmp-podagent.yaml #workartund
