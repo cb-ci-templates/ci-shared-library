@@ -12,9 +12,9 @@ def call(Map config) {
             sed -i "s/^  //g" ${podTemplateFilePath}
             sed -i '1d' ${podTemplateFilePath}
             cat ${podTemplateFilePath}
-            envsubst < ${podTemplateFilePath} |yq > gen-agentTemplate.yaml
+            envsubst < ${podTemplateFilePath} > gen-agentTemplate.yaml
             cat gen-agentTemplate.yaml
-            diff -u gen-agentTemplate.yaml ${podTemplateFilePath}
+            diff -u  ${podTemplateFilePath} gen-agentTemplate.yaml
             ls -la            
         """
         return readYaml(file: "gen-agentTemplate.yaml")
