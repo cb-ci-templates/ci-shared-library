@@ -14,9 +14,9 @@ def call(Map config) {
         writeYaml file: podTemplateFilePath , data: agentPod
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
         // Function to check if a YAML path exists
-        def images=sh(script: """yq -o=json '.' ${podTemplateFilePath} |jq -r 'paths |join(".")'""",returnStdout: true)
-
-        images=images.split("\\.")
+        def images=sh(script: """
+                yq -o=json '.' ${podTemplateFilePath} |jq -r 'paths |join(".")' |grep -E "build.*.image" |tr "\\n" ","
+            """,returnStdout: true)
         println "IMAGES"
         println images
         images.each {image ->
