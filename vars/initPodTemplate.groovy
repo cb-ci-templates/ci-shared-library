@@ -18,7 +18,7 @@ def call(Map config) {
         agentYaml = readYaml file: 'agentTemplate.yaml'
     }
     container ("yq"){
-        sh "yq eval agentTemplate.yaml  > agentTemplate.yaml"
+        sh "echo  ${agentYaml} |yq > agentTemplate.yaml"
         agentYaml = readYaml file: 'agentTemplate.yaml'
         println agentYaml
        /* sh '''
