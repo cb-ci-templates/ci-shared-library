@@ -15,7 +15,7 @@ def call(Map config) {
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
         // Function to check if a YAML path exists
         def images=sh(script: """yq -o=json '.' ${podTemplateFilePath} | jq -r 'paths | join(".")'""",returnStdout: true)
-images=images.splitt(".")
+images=images.split(".")
         println "IMAGES"
         println images
         images.each {image ->
