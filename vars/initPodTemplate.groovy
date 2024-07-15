@@ -9,14 +9,18 @@ def call(Map config) {
         //writeYaml file: podTemplateFilePath, data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
         def agentPod=libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
         sh """
+            set -x
+            ls -la        
+            echo ${agentPod} |envsubst > gen-agentTemplate.yaml
             ls -la
+            cat gen-agentTemplate.yaml            
+        """
+        /*
             #sed -i "s/^  //g" ${podTemplateFilePath}
             #sed -i '1d' ${podTemplateFilePath}
             #cat ${podTemplateFilePath}
             echo ${agentPod}
-            echo ${agentPod} |envsubst > gen-agentTemplate.yaml
-            cat gen-agentTemplate.yaml            
-        """
+         */
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
         //return readYaml(file: "gen-agentTemplate.yaml").toString()
         result = sh(returnStdout: true, script: "yq gen-agentTemplate.yaml")
