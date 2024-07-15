@@ -67,7 +67,7 @@ def call(Map config) {
 
 def replaceVariablesInFile(filePath, envVars) {
     // Read the content of the file
-    def fileContent = new File(filePath).text
+    def fileContent = readYaml file: filePath
     // Replace placeholders with environment variables
     envVars.each { key, value ->
         fileContent = fileContent.replace("\${${key}}", value)
