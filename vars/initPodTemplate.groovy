@@ -14,7 +14,7 @@ def call(Map config) {
         //#sed -i '1d' tmp-podagent.yaml #workartund
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
         agentYaml = readYaml file: "tmp-podagent.yaml"
-        prinln agentYaml
+        println agentYaml
        /* sh '''
            rm -v agent.yaml
         '''

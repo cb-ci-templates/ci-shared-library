@@ -15,15 +15,15 @@ def call(Map configDefaults) {
                         config=init configDefaults
                         agentYaml=initPodTemplate config
                     }
-                    container("envsubst") {
+                    /*container("envsubst") {
                        writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
                         script {
-                            //TODO: Iterate over all config.build.X.images and expose them as ebv vars
                             env.MAVEN_IMAGE = config.build.maven.image
                             sh "ls -la && envsubst < agent.yaml > tmp-podagent.yaml"
                             agentYaml=readYaml file: "tmp-podagent.yaml"
                         }
                     }
+                     */
                     sh "echo ${agentYaml}"
                 }
             }
