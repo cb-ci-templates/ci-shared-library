@@ -27,14 +27,14 @@ def call(Map config) {
          '''
          */
     }
-    def tmpAgent="""
+    Map tmpAgent="""---
 kind: Pod
 metadata:
   name: maven
 spec:
   containers:
     - name: maven
-      image: "${env.MAVEN_IMAGE}"
+      image: ${config.build.maven.image}
       #runAsUser: 1000
       command:
         - cat
