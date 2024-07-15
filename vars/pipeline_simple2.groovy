@@ -13,7 +13,7 @@ def call(Map configDefaults) {
                 steps {
                     script {
                         config = init configDefaults
-                        agentYaml = initPodTemplate config
+                        //agentYaml = initPodTemplate config
                     }
                     sh "echo ${agentYaml}"
                 }
@@ -24,9 +24,9 @@ def call(Map configDefaults) {
 
                 agent {
                     kubernetes {
-                        yaml """
-                            ${agentYaml}
-                            """
+                        yaml kubernetesPodTemplate(file: "podTemplate-envsubst-images.yaml", binding: ['env': env])
+                        defaultContainer 'maven'
+                        showRawYaml true
                     }
                 }
                 stages {
