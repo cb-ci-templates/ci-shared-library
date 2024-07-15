@@ -3,12 +3,12 @@ def call(Map config) {
     container("yq") {
         // Define the path to your template file
         def podTemplateFilePath = 'agentTemplate.yaml'
-        env.MAVEN_IMAGE = config.build.maven.image
+        //env.MAVEN_IMAGE = config.build.maven.image
         //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
         //agentRef=libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
         //writeYaml file: podTemplateFilePath, data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
         def agentPod=libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
-                .replaceAll(/\${MAVEN_IMAGE}/,"$env.MAVEN_UIMAGE")
+                .replaceAll('\${MAVEN_IMAGE}',config.build.maven.image)
         return agentPod
         /*
         writeYaml file: podTemplateFilePath, data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
