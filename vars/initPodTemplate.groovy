@@ -1,14 +1,4 @@
-def pathExists(Map yaml, List<String> path) {
-    def current = yaml
-    for (part in path) {
-        if (current.containsKey(part)) {
-            current = current[part]
-        } else {
-            return false
-        }
-    }
-    return true
-}
+
 
 def call(Map config) {
     def result=null
@@ -20,21 +10,19 @@ def call(Map config) {
                    .replace('\${KANIKO_IMAGE}',config.build.kaniko.image)
 
         // Function to replace tokens using a map
-
-
-// Replace tokens
         //agentPod = replaceTokens(agentPod, replacements)
-        writeYaml file: podTemplateFilePath, data: agentPod
+        writeYaml file: podTemplateFilePath , data: agentPod
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
         // Function to check if a YAML path exists
-
-
-        // Check if specific paths exist
-        def path1 = ['build', 'maven', 'image']
-        def path2 = ['build', 'maven', 'nonexistent']
-
-        this.pathExists(readYaml(text: "${agentPod}"), path1)
-        this.pathExists(readYaml(text: "${agentPod}"), path2)
+        def images=sh(script: """
+            yq -o=json '.' ${podTemplateFilePath} | jq -r 'paths | join(".")'
+            """,returnStdout: true).split(".")
+        images.each {image ->
+            println image.toUpperCase()
+            tmpImage=image.toUpperCase().replace(".","_")
+            println tmpImage
+            agentPod.replace("\${" + tmpImage + "}","tmpImage")
+        }
 
         return agentPod
     }
