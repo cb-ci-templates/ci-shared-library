@@ -8,7 +8,7 @@ def call(Map config) {
         sh """
             ls -la
             sed -i "s/^  //g" agentTemplate.yaml 
-            #sed -i '1d' agentTemplate.yaml 
+            sed -i '1d' agentTemplate.yaml 
             cat agentTemplate.yaml
             envsubst < agentTemplate.yaml > gen-agentTemplate.yaml
             ls -la            
