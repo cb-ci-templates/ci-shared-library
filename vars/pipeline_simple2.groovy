@@ -17,6 +17,31 @@ def call(Map configDefaults) {
                     }
                 }
             }
+            stage('CD-image-envsubt') {
+                //           parallel {
+                //                stage ("runci"){
+
+                agent {
+                    kubernetes {
+                        yaml agentYaml
+                        //yaml libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
+                    }
+                }
+                stages {
+                    stage("deploy") {
+                        steps {
+                            sh "echo deploy "
+                        }
+                    }
+                    stage("test") {
+                        steps {
+                            sh "echo test "
+                        }
+                    }
+                    //                  }
+//                }
+                }
+            }
             stage('CI') {
                 //           parallel {
                 //                stage ("runci"){
@@ -54,31 +79,6 @@ def call(Map configDefaults) {
                                             echo "This is branch b"
                                         }
                                     })
-                        }
-                    }
-                    //                  }
-//                }
-                }
-            }
-            stage('CD-image-envsubt') {
-                //           parallel {
-                //                stage ("runci"){
-
-                agent {
-                    kubernetes {
-                        yaml agentYaml
-                        //yaml libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
-                    }
-                }
-                stages {
-                    stage("deploy") {
-                        steps {
-                            sh "echo deploy "
-                        }
-                    }
-                    stage("test") {
-                        steps {
-                            sh "echo test "
                         }
                     }
                     //                  }
