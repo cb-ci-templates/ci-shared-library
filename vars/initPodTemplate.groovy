@@ -1,6 +1,6 @@
 def call(Map config) {
     def agentYaml=null
-    container("envsubst") {
+    container("yq") {
         //TODO: Iterate over all config.build.X.images and expose them as ebv vars
         env.MAVEN_IMAGE = config.build.maven.image
         //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
