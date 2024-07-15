@@ -7,7 +7,10 @@ def call(Map config) {
         //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
         //agentRef=libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
         //writeYaml file: podTemplateFilePath, data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
-       // def agentPod=libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
+        def agentPod=libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
+        agentPod.replace("\${MAVEN_IMAGE}","$env.MAVEN_UIMAGE")
+        return agentPod
+        /*
         writeYaml file: podTemplateFilePath, data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
 
         sh """
@@ -19,7 +22,9 @@ def call(Map config) {
             sed -i '1d' ${podTemplateFilePath}
             cat gen-agentTemplate.yaml            
         """
+        */
         /*
+
             #sed -i "s/^  //g" ${podTemplateFilePath}
             #sed -i '1d' ${podTemplateFilePath}
             #cat ${podTemplateFilePath}
@@ -27,8 +32,8 @@ def call(Map config) {
          */
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
         //return readYaml(file: "gen-agentTemplate.yaml").toString()
-        result = sh(returnStdout: true, script: "set -x && yq gen-agentTemplate.yaml")
-        return result
+        //result = sh(returnStdout: true, script: "set -x && yq gen-agentTemplate.yaml")
+       // return result
         //#sed -i '1d' tmp-podagent.yaml #workartund
         //result = readYaml file: 'gen-agentTemplate.yaml'
 
