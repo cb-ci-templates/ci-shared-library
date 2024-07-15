@@ -15,31 +15,6 @@ def call(Map configDefaults) {
                         config=init configDefaults
                         //agentYaml=initPodTemplate config
                     }
-                    container("envsubst") {
-                        writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
-                        script {
-                            //TODO: Iterate over all config.build.X.images and expose them as ebv vars
-                            env.MAVEN_IMAGE = config.build.maven.image
-                            //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
-                        }
-                        sh '''
-                            ls -la 
-                            sed -i "s/^  //g" agent.yaml
-                            sed -i '1d' agent.yaml 
-                            cat agent.yaml
-                            envsubst < agent.yaml > tmp-podagent.yaml
-                            sed -i '1d' tmp-podagent.yaml #workartund
-                            cat tmp-podagent.yaml
-                            diff -u agent.yaml tmp-podagent.yaml
-                        '''
-                        script{
-                            //TODO: Iterate over all config.build.X.images and expose them as ebv vars
-                            env.MAVEN_IMAGE = config.build.maven.image
-                            //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
-                            agentYaml = readYaml file: "tmp-podagent.yaml"
-                        }
-                        sh "echo $agentYaml"
-                    }
                 }
             }
             stage('CI') {
