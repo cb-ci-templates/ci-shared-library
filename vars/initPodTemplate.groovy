@@ -5,17 +5,16 @@ def call(Map config) {
         env.MAVEN_IMAGE = config.build.maven.image
         //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
         writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
-        sh '''
+        sh """
             ls -la 
             cat agent.yaml
             envsubst < agent.yaml > ${config.dynamicPodTemplateFile}
             sed -i '1d' ${config.dynamicPodTemplateFile} #workartund
             cat ${config.dynamicPodTemplateFile}
-        '''
+        """
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
         agentYaml = readYaml file: config.dynamicPodTemplateFile
        /* sh '''
-           rm -v tmp-podagent.yaml
            rm -v agent.yaml
         '''
         */

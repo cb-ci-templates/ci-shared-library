@@ -13,9 +13,9 @@ def call(Map configDefaults) {
                 steps {
                     script {
                         config = init configDefaults
-                        agentYaml = initPodTemplate config
                     }
-                    sh "echo ${agentYaml}"
+                    initPodTemplate config
+                    sh "cat ${config.dynamicPodTemplateFile}"
                 }
             }
             stage('CI') {
