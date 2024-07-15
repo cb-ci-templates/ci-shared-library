@@ -24,10 +24,13 @@ def call(Map configDefaults) {
                         }
                         sh '''
                             ls -la 
+                            sed -i "s/^  //g" agent.yaml
+                            sed -i '1d' agent.yaml 
                             cat agent.yaml
                             envsubst < agent.yaml > tmp-podagent.yaml
                             sed -i '1d' tmp-podagent.yaml #workartund
                             cat tmp-podagent.yaml
+                            diff -u agent.yaml tmp-podagent.yaml
                         '''
                         script{
                             //TODO: Iterate over all config.build.X.images and expose them as ebv vars
