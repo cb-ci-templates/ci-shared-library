@@ -14,10 +14,11 @@ def call(Map config) {
         '''
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
         agentYaml = readYaml file: "tmp-podagent.yaml"
-        sh '''
+       /* sh '''
            rm -v tmp-podagent.yaml
            rm -v agent.yaml
         '''
+        */
     }
     return agentYaml
 }
