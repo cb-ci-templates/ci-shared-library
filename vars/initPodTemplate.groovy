@@ -13,7 +13,8 @@ def call(Map config) {
                         '''
         agentYaml = readYaml file: "tmp-podagent.yaml"
         sh '''
-           rm -v tmp-agent.yaml
+           rm -v tmp-podagent.yaml
+           rm -v agent.yaml
         '''
 
     }
