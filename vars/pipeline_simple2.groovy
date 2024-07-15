@@ -15,6 +15,7 @@ def call(Map configDefaults) {
                         config = init configDefaults
                         agentYaml = initPodTemplate config
                     }
+                    sh "echo ${agentYaml}"
                 }
             }
             stage('CD-image-envsubt') {
