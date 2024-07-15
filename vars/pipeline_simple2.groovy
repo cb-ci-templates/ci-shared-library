@@ -23,7 +23,7 @@ def call(Map configDefaults) {
 
                 agent {
                     kubernetes {
-                        yaml agentYaml
+                        yaml """$agentYaml"""
                         //yaml libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
                     }
                 }
