@@ -1,4 +1,5 @@
 def call(Map config) {
+    def agentYaml=null
     container("envsubst") {
         //TODO: Iterate over all config.build.X.images and expose them as ebv vars
         env.MAVEN_IMAGE = config.build.maven.image
@@ -16,7 +17,6 @@ def call(Map config) {
            rm -v tmp-podagent.yaml
            rm -v agent.yaml
         '''
-
     }
-    return result
+    return agentYaml
 }
