@@ -66,8 +66,8 @@ def call(Map configDefaults) {
 
                 agent {
                     kubernetes {
-                        yaml "${agentYaml}"
-                        //yamlFile config.dynamicPodTemplateFile
+                        //yaml "${agentYaml}"
+                        yamlFile config.dynamicPodTemplateFile
                     }
                 }
                 stages {
