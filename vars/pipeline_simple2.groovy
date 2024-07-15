@@ -13,7 +13,7 @@ def call(Map configDefaults) {
                 steps {
                     script {
                         config = init configDefaults
-                        agentYaml = initPodTemplate "tmp-podagent.yaml"
+                        agentYaml = initPodTemplate config
                     }
                 }
             }
