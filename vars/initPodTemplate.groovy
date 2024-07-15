@@ -8,7 +8,7 @@ def call(Map config) {
         //agentRef=libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
         //writeYaml file: podTemplateFilePath, data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
         def agentPod=libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
-                .replaceAll('\${MAVEN_IMAGE}',config.build.maven.image)
+                .replace('\${MAVEN_IMAGE}',config.build.maven.image)
         return agentPod
         /*
         writeYaml file: podTemplateFilePath, data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
