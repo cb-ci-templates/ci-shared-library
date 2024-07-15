@@ -8,18 +8,18 @@ def call(Map config) {
         sh """
             ls -la 
             cat agentTemplate.yaml
-            envsubst < agentTemplate.yaml > agentTemplate.yaml
-            sed -i '1d' agentTemplate.yaml
-            sed -i "s/^  //g" agentTemplate.yaml
+            envsubst < agentTemplate.yaml > gen-agentTemplate.yaml
+            sed -i '1d' gen-agentTemplate.yaml
+            sed -i "s/^  //g" gen-agentTemplate.yaml
             ls -la            
          """
         //#sed -i '1d' tmp-podagent.yaml #workartund
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
-        agentYaml = readYaml file: 'agentTemplate.yaml'
+        agentYaml = readYaml file: 'gen-agentTemplate.yaml'
     }
     container ("yq"){
-        sh "echo  ${agentYaml} |yq > agentTemplate.yaml"
-        agentYaml = readYaml file: 'agentTemplate.yaml'
+        sh "echo  ${agentYaml} |yq > gen-agentTemplate.yaml"
+        agentYaml = readYaml file: 'gen-agentTemplate.yaml'
         println agentYaml
        /* sh '''
            rm -v agent.yaml
