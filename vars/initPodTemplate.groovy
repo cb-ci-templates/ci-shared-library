@@ -18,14 +18,34 @@ def call(Map config) {
         //agentPod = replaceTokens(agentPod, replacements)
         writeYaml file: podTemplateFilePath, data: agentPod
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
+
+
+        // Check if specific paths exist
+        def path1 = ['build', 'maven', 'image']
+        def path2 = ['build', 'maven', 'nonexistent']
+
+        println "Path ${path1} exists: ${pathExists(agentPod, path1)}"
+        println "Path ${path2} exists: ${pathExists(agentPod, path2)}"
+
         return agentPod
     }
 }
 
-def replaceTokens (string,replacements) {
-    replacements.each { token, value ->
-        string = string.replace(token, value)
+
+
+
+// Function to check if a YAML path exists
+def pathExists(Map<String, Object> map, List<String> path) {
+    def current = map
+    for (part in path) {
+        if (current.containsKey(part)) {
+            current = current[part]
+        } else {
+            return false
+        }
     }
-    return string
+    return true
 }
+
+
 
