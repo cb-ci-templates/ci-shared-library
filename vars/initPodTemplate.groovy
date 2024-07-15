@@ -33,8 +33,8 @@ def call(Map config) {
         def path1 = ['build', 'maven', 'image']
         def path2 = ['build', 'maven', 'nonexistent']
 
-        this.pathExists(readYaml text: agentPod, path1)
-        this.pathExists(readYaml text: agentPod, path2)
+        this.pathExists(readYaml(text: "${agentPod}"), path1)
+        this.pathExists(readYaml(text: "${agentPod}"), path2)
 
         return agentPod
     }
