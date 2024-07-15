@@ -13,11 +13,7 @@ def pathExists(Map yaml, List<String> path) {
 def call(Map config) {
     def result=null
     container("yq") {
-        def replacements = [
-                '\${MAVEN_IMAGE}': config.build.maven.image ?: 'maven:3-amazoncorretto-17',
-                '\${KANIKO_IMAGE}': config.build.kaniko.image ?: 'kaniko'
-        ]
-        // Define the path to your template file
+         // Define the path to your template file
         def podTemplateFilePath = 'agentTemplate.yaml'
         def agentPod=libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
                    .replace('\${MAVEN_IMAGE}',config.build.maven.image)
@@ -37,8 +33,8 @@ def call(Map config) {
         def path1 = ['build', 'maven', 'image']
         def path2 = ['build', 'maven', 'nonexistent']
 
-        println "Path ${path1} exists: ${pathExists(agentPod, path1)}"
-        println "Path ${path2} exists: ${pathExists(agentPod, path2)}"
+        this.pathExists(agentPod, path1)
+        this.pathExists(agentPod, path2)
 
         return agentPod
     }
