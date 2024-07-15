@@ -24,7 +24,9 @@ def call(Map configDefaults) {
 
                 agent {
                     kubernetes {
-                        yaml agentYaml
+                        yaml """
+                            ${agentYaml}
+                            """
                     }
                 }
                 stages {
