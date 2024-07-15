@@ -9,6 +9,8 @@ def call(Map config) {
         //writeYaml file: podTemplateFilePath, data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
         def agentPod=libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
                 .replace('\${MAVEN_IMAGE}',config.build.maven.image)
+        writeYaml file: podTemplateFilePath, data: agentPod
+        archiveArtifacts artifacts: '*.yaml', followSymlinks: false
         return agentPod
         /*
         writeYaml file: podTemplateFilePath, data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
@@ -30,7 +32,7 @@ def call(Map config) {
             #cat ${podTemplateFilePath}
             echo ${agentPod}
          */
-        archiveArtifacts artifacts: '*.yaml', followSymlinks: false
+        //archiveArtifacts artifacts: '*.yaml', followSymlinks: false
         //return readYaml(file: "gen-agentTemplate.yaml").toString()
         //result = sh(returnStdout: true, script: "set -x && yq gen-agentTemplate.yaml")
        // return result
