@@ -26,7 +26,8 @@ spec:
       securityContext:
         runAsUser: 1000
     - name: yq
-      image: mikefarah/yq
+      image: linuxserver/yq:3.4.3
+      #image: mikefarah/yq
       command:
         - sleep
       args:

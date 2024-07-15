@@ -4,7 +4,8 @@ metadata:
 spec:
   containers:
     - name: maven
-      image: ${MAVEN_IMAGE:-maven:3-amazoncorretto-17}
+      #image: ${MAVEN_IMAGE:-maven:3-amazoncorretto-17}
+      image: ${MAVEN_IMAGE}
       #runAsUser: 1000
       command:
         - cat
