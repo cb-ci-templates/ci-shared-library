@@ -1,5 +1,5 @@
 def call(Map config) {
-    Map agentYaml=null
+    def result=null
     container("yq") {
         // Define the path to your template file
         def podTemplateFilePath = 'agentTemplate.yaml'
@@ -8,27 +8,25 @@ def call(Map config) {
         //agentRef=libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
         writeYaml file: podTemplateFilePath, data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
         sh """
-            #cat agentTemplate.yaml |envsubst |yq > gen-agentTemplate.yaml
             ls -la
-            sed -i "s/^  //g" agentTemplate.yaml 
-            sed -i '1d' agentTemplate.yaml 
-            cat agentTemplate.yaml
-            envsubst < agentTemplate.yaml |yq > gen-agentTemplate.yaml
+            sed -i "s/^  //g" ${podTemplateFilePath}
+            sed -i '1d' ${podTemplateFilePath}
+            cat ${podTemplateFilePath}
+            envsubst < ${podTemplateFilePath} |yq > gen-agentTemplate.yaml
             cat gen-agentTemplate.yaml
+            diff gen-agentTemplate.yaml ${podTemplateFilePath}
             ls -la            
         """
         //#sed -i '1d' tmp-podagent.yaml #workartund
-        agentYaml = readYaml file: 'gen-agentTemplate.yaml'
+        result = readYaml file: 'gen-agentTemplate.yaml'
         //println "GEN-AGENT"
-        //println agentYaml
+        //println result
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
 
-        /* sh '''
-            rm -v agent.yaml
-         '''
+        /* sh "rm -v ${podTemplateFilePath}"
          */
     }
-    return agentYaml
+    return result
 }
 
 
