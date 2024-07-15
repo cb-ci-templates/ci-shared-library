@@ -4,7 +4,7 @@ metadata:
 spec:
   containers:
     - name: maven
-      image: "${MAVEN_IMAGE}"
+      image: ${MAVEN_IMAGE}
       command:
         - cat
       tty: true
