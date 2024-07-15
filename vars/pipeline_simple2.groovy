@@ -13,18 +13,30 @@ def call(Map configDefaults) {
                 steps {
                     script {
                         config=init configDefaults
-                        agentYaml=initPodTemplate config
+                        //agentYaml=initPodTemplate config
                     }
-                    /*container("envsubst") {
-                       writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
+                    container("envsubst") {
+                        writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
                         script {
+                            //TODO: Iterate over all config.build.X.images and expose them as ebv vars
                             env.MAVEN_IMAGE = config.build.maven.image
-                            sh "ls -la && envsubst < agent.yaml > tmp-podagent.yaml"
-                            agentYaml=readYaml file: "tmp-podagent.yaml"
+                            //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
                         }
+                        sh '''
+                            ls -la 
+                            cat agent.yaml
+                            envsubst < agent.yaml > tmp-podagent.yaml
+                            sed -i '1d' tmp-podagent.yaml #workartund
+                            cat tmp-podagent.yaml
+                        '''
+                        script{
+                            //TODO: Iterate over all config.build.X.images and expose them as ebv vars
+                            env.MAVEN_IMAGE = config.build.maven.image
+                            //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
+                            agentYaml = readYaml file: "tmp-podagent.yaml"
+                        }
+                        sh "echo $agentYaml"
                     }
-                     */
-                    sh "echo ${agentYaml}"
                 }
             }
             stage('CI') {
@@ -76,7 +88,7 @@ def call(Map configDefaults) {
 
                 agent {
                     kubernetes {
-                        yaml agentYaml
+                        yaml "${agentYaml}"
                         //yamlFile config.dynamicPodTemplateFile
                     }
                 }
