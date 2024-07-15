@@ -7,7 +7,7 @@ def call(Map config) {
         //agentRef=libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
         writeYaml file: 'agentTemplate.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
         sh """
-            cat agentTemplate.yaml |envsubst |yq > gen-agentTemplate.yaml
+            #cat agentTemplate.yaml |envsubst |yq > gen-agentTemplate.yaml
             ls -la
             sed -i "s/^  //g" agentTemplate.yaml 
             sed -i '1d' agentTemplate.yaml 
