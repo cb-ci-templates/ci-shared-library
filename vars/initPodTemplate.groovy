@@ -6,23 +6,21 @@ def call(Map config) {
         env.MAVEN_IMAGE = config.build.maven.image
         //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
         //agentRef=libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
-        writeYaml file: podTemplateFilePath, data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
+        //writeYaml file: podTemplateFilePath, data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
+        def agentPod=libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
         sh """
             ls -la
-            sed -i "s/^  //g" ${podTemplateFilePath}
-            sed -i '1d' ${podTemplateFilePath}
-            cat ${podTemplateFilePath}
-            envsubst < ${podTemplateFilePath} > gen-agentTemplate.yaml
-            cat gen-agentTemplate.yaml
-            #diff -u  ${podTemplateFilePath} gen-agentTemplate.yaml
-            ls -la            
+            #sed -i "s/^  //g" ${podTemplateFilePath}
+            #sed -i '1d' ${podTemplateFilePath}
+            #cat ${podTemplateFilePath}
+            echo $agentPod
+            echo ${agentPod} |envsubst > gen-agentTemplate.yaml
+            cat gen-agentTemplate.yaml            
         """
-        sh "echo BEFORE RETURN1 ARCHIVE"
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
-        sh "echo BEFORE RETURN2 ARCHIVE"
-        return readYaml(file: "gen-agentTemplate.yaml").toString()
-       // result = sh(returnStdout: true, script: "yq gen-agentTemplate.yaml")
-
+        //return readYaml(file: "gen-agentTemplate.yaml").toString()
+        result = sh(returnStdout: true, script: "yq gen-agentTemplate.yaml")
+        return result
         //#sed -i '1d' tmp-podagent.yaml #workartund
         //result = readYaml file: 'gen-agentTemplate.yaml'
 
