@@ -20,7 +20,7 @@ def call(Map config) {
         sh "echo BEFORE RETURN1 ARCHIVE"
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
         sh "echo BEFORE RETURN2 ARCHIVE"
-        return readYaml(file: "gen-agentTemplate.yaml")
+        return readYaml(file: "gen-agentTemplate.yaml").toString()
        // result = sh(returnStdout: true, script: "yq gen-agentTemplate.yaml")
 
         //#sed -i '1d' tmp-podagent.yaml #workartund

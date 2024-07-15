@@ -13,7 +13,7 @@ def call(Map configDefaults) {
                 steps {
                     script {
                         config = init configDefaults
-                        //agentYaml = initPodTemplate config
+                        agentYaml = initPodTemplate config
                     }
                     sh "echo ${agentYaml}"
                 }
@@ -24,7 +24,8 @@ def call(Map configDefaults) {
 
                 agent {
                     kubernetes {
-                        yaml kubernetesPodTemplate(config)
+                        //yaml kubernetesPodTemplate(config)
+                        yaml agentYaml
                         defaultContainer 'maven'
                         showRawYaml true
                     }
