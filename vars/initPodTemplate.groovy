@@ -1,5 +1,5 @@
-def pathExists(Map<String, Object> map, List<String> path) {
-    def current = map
+def pathExists(Map yaml, List<String> path) {
+    def current = yaml
     for (part in path) {
         if (current.containsKey(part)) {
             current = current[part]
