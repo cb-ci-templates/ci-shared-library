@@ -1,6 +1,6 @@
 // vars/kubernetesPodTemplate.groovy
-def call(Map config=[:]) {
-    def template = libraryResource("podtemplates/${config.file}")
+def call(Map config,file) {
+    def template = libraryResource("podtemplates/${file}")
     /*TODO: iterate over images from ci-config
     if (config.binding) {
         def engine = new groovy.text.GStringTemplateEngine()
