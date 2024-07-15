@@ -17,74 +17,73 @@ def call(Map configDefaults) {
                     }
                 }
             }
-        }
-        stage('CI') {
-            //           parallel {
-            //                stage ("runci"){
+            stage('CI') {
+                //           parallel {
+                //                stage ("runci"){
 
-            agent {
-                kubernetes {
-                    yaml libraryResource("podtemplates/${config.build.maven.podyaml}")
-                }
-            }
-            stages {
-                stage("build") {
-                    steps {
-                        sh "echo build "
+                agent {
+                    kubernetes {
+                        yaml libraryResource("podtemplates/${config.build.maven.podyaml}")
                     }
                 }
-                stage("create image") {
-                    steps {
-                        sh "echo image "
+                stages {
+                    stage("build") {
+                        steps {
+                            sh "echo build "
+                        }
                     }
-                }
-                stage("test") {
-                    steps {
-                        sh "echo image "
+                    stage("create image") {
+                        steps {
+                            sh "echo image "
+                        }
                     }
-                }
-                stage("qa scans") {
-                    steps {
-                        parallel(a: {
-                            container("maven") {
-                                echo "This is branch a"
-                            }
-                        },
-                                b: {
-                                    container("maven") {
-                                        echo "This is branch b"
-                                    }
-                                })
+                    stage("test") {
+                        steps {
+                            sh "echo image "
+                        }
                     }
-                }
-                //                  }
+                    stage("qa scans") {
+                        steps {
+                            parallel(a: {
+                                container("maven") {
+                                    echo "This is branch a"
+                                }
+                            },
+                                    b: {
+                                        container("maven") {
+                                            echo "This is branch b"
+                                        }
+                                    })
+                        }
+                    }
+                    //                  }
 //                }
+                }
             }
-        }
-        stage('CD-image-envsubt') {
-            //           parallel {
-            //                stage ("runci"){
+            stage('CD-image-envsubt') {
+                //           parallel {
+                //                stage ("runci"){
 
-            agent {
-                kubernetes {
-                    yaml agentYaml
-                }
-            }
-            stages {
-                stage("deploy") {
-                    steps {
-                        sh "echo deploy "
+                agent {
+                    kubernetes {
+                        yaml agentYaml
                     }
                 }
-                stage("test") {
-                    steps {
-                        sh "echo test "
+                stages {
+                    stage("deploy") {
+                        steps {
+                            sh "echo deploy "
+                        }
                     }
-                }
-                //                  }
+                    stage("test") {
+                        steps {
+                            sh "echo test "
+                        }
+                    }
+                    //                  }
 //                }
+                }
             }
         }
     }
 }
-
