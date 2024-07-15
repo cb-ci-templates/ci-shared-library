@@ -14,12 +14,12 @@ def call(Map config) {
             cat ${podTemplateFilePath}
             envsubst < ${podTemplateFilePath} > gen-agentTemplate.yaml
             cat gen-agentTemplate.yaml
-            diff -u  ${podTemplateFilePath} gen-agentTemplate.yaml
+            #diff -u  ${podTemplateFilePath} gen-agentTemplate.yaml
             ls -la            
         """
-        echo "BEFORE RETURN1"
+        sh "echo BEFORE RETURN1 ARCHIVE"
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
-        echo "BEFORE RETURN2"
+        sh "echo BEFORE RETURN2 ARCHIVE"
         return readYaml(file: "gen-agentTemplate.yaml")
        // result = sh(returnStdout: true, script: "yq gen-agentTemplate.yaml")
 
