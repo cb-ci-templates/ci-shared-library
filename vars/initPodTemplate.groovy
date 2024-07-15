@@ -8,12 +8,12 @@ def call(Map config) {
         sh """
             ls -la 
             cat agent.yaml
-            envsubst < agent.yaml > ${config.dynamicPodTemplateFile}
-            #sed -i '1d' ${config.dynamicPodTemplateFile} #workartund
-            cat ${config.dynamicPodTemplateFile}
+            envsubst < agent.yaml > tmp-podagent.yaml
+            #sed -i '1d' tmp-podagent.yaml #workartund
+            cat tmp-podagent.yaml
         """
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
-        agentYaml = readYaml file: config.dynamicPodTemplateFile
+        agentYaml = readYaml file: "tmp-podagent.yaml"
        /* sh '''
            rm -v agent.yaml
         '''
