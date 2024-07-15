@@ -17,14 +17,14 @@ def call(Map config) {
 
         //Test code below doesnt work yet
         // Function to check if a YAML path exists
-        def images=sh(script: """
+        def images=sh(script: '''
                 set -x
                 yq -o=json '.' agentTemplate.yaml |jq -r 'paths |join(".")'
                 for img in \$(yq -o=json '.' agentTemplate.yaml |jq -r 'paths |join(".")' |grep -E "build.*.image")
                 do
                     echo \$img
                 done
-            """,returnStdout: true)
+            ''',returnStdout: true)
         println "IMAGES"
         println images
         images.each {image ->
