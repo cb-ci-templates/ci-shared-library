@@ -14,6 +14,7 @@ def call(Map configDefaults) {
                     script {
                         config = init configDefaults
                         agentYaml = initPodTemplate config
+                        println agentYaml
                     }
                 }
             }
