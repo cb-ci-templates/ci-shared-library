@@ -11,86 +11,80 @@ def call(Map configDefaults) {
                     }
                 }
                 steps {
-                   script{
-                       config= init configDefaults
-                   }
-                    container("envsubst") {
-                        sh "ls -la && envsubst < agent.yaml > tmp-podagent.yaml"
-                        script {
-                            agentYaml = readYaml file: "tmp-podagent.yaml"
-                        }
+                    script {
+                        config = init configDefaults
+                        agentYaml = initPodTemplate "tmp-podagent.yaml"
                     }
                 }
             }
-            stage('CI') {
-                //           parallel {
-                //                stage ("runci"){
+        }
+        stage('CI') {
+            //           parallel {
+            //                stage ("runci"){
 
-                agent {
-                    kubernetes {
-                        yaml libraryResource("podtemplates/${config.build.maven.podyaml}")
+            agent {
+                kubernetes {
+                    yaml libraryResource("podtemplates/${config.build.maven.podyaml}")
+                }
+            }
+            stages {
+                stage("build") {
+                    steps {
+                        sh "echo build "
                     }
                 }
-                stages {
-                    stage("build") {
-                        steps {
-                            sh "echo build "
-                        }
+                stage("create image") {
+                    steps {
+                        sh "echo image "
                     }
-                    stage("create image") {
-                        steps {
-                            sh "echo image "
-                        }
+                }
+                stage("test") {
+                    steps {
+                        sh "echo image "
                     }
-                    stage("test") {
-                        steps {
-                            sh "echo image "
-                        }
-                    }
-                    stage("qa scans") {
-                        steps {
-                            parallel(
-                                    a: {
-                                        container("maven") {
-                                            echo "This is branch a"
-                                        }
-                                    },
-                                    b: {
-                                        container("maven") {
-                                            echo "This is branch b"
-                                        }
+                }
+                stage("qa scans") {
+                    steps {
+                        parallel(a: {
+                            container("maven") {
+                                echo "This is branch a"
+                            }
+                        },
+                                b: {
+                                    container("maven") {
+                                        echo "This is branch b"
                                     }
-                            )
-                        }
+                                })
                     }
-                    //                  }
+                }
+                //                  }
 //                }
+            }
+        }
+        stage('CD-image-envsubt') {
+            //           parallel {
+            //                stage ("runci"){
+
+            agent {
+                kubernetes {
+                    yaml agentYaml
                 }
             }
-            stage('CD-image-envsubt') {
-                //           parallel {
-                //                stage ("runci"){
-
-                agent {
-                    kubernetes {
-                        yaml agentYaml
+            stages {
+                stage("deploy") {
+                    steps {
+                        sh "echo deploy "
                     }
                 }
-                stages {
-                    stage("deploy") {
-                        steps {
-                            sh "echo deploy "
-                        }
+                stage("test") {
+                    steps {
+                        sh "echo test "
                     }
-                    stage("test") {
-                        steps {
-                            sh "echo test "
-                        }
-                    }
-                    //                  }
+                }
+                //                  }
 //                }
-                }
             }
         }
     }
 }
+
