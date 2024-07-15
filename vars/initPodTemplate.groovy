@@ -19,6 +19,9 @@ def call(Map config) {
         // Function to check if a YAML path exists
         def images=sh(script: """
                 set -x
+                \$(yq -o=json '.' agentTemplate.yaml 
+                \$(yq -o=json '.' agentTemplate.yaml |jq -r 'paths'
+                \$(yq -o=json '.' agentTemplate.yaml |jq -r 'paths |join(".")' |grep -E "build.*.image"
                 for img in \$(yq -o=json '.' agentTemplate.yaml |jq -r 'paths |join(".")' |grep -E "build.*.image")
                 do
                     echo \$img
