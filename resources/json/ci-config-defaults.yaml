@@ -1,3 +1,3 @@
 app : 'Hello World'
 branchPropertiesFile: 'ci-config.yaml'
-dynamicPodTemplateFile: "tmp-agent.yaml"
+dynamicPodTemplateFile: "tmp-podagent.yaml"
