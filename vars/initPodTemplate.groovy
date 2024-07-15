@@ -14,7 +14,7 @@ def call(Map config) {
             cat ${podTemplateFilePath}
             envsubst < ${podTemplateFilePath} |yq > gen-agentTemplate.yaml
             cat gen-agentTemplate.yaml
-            diff gen-agentTemplate.yaml ${podTemplateFilePath}
+            diff -u gen-agentTemplate.yaml ${podTemplateFilePath}
             ls -la            
         """
         //#sed -i '1d' tmp-podagent.yaml #workartund
