@@ -24,7 +24,7 @@ def call(Map configDefaults) {
 
                 agent {
                     kubernetes {
-                        yamlFile kubernetesPodTemplate(file: config.dynamicPodTemplateFile)
+                        yamlFile kubernetesPodTemplate(config)
                         defaultContainer 'maven'
                         showRawYaml true
                     }
