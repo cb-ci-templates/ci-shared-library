@@ -1,5 +1,5 @@
 def call(Map config) {
-    def agentYaml=null
+    Map agentYaml=null
     container("yq") {
         //TODO: Iterate over all config.build.X.images and expose them as ebv vars
         env.MAVEN_IMAGE = config.build.maven.image

@@ -1,6 +1,6 @@
 def call(Map configDefaults) {
     def config = null
-    def agentYaml = null
+    Map agentYaml = null
     pipeline {
         agent none
         stages {
