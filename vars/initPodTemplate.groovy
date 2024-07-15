@@ -9,7 +9,7 @@ def call(Map config) {
         def podTemplateFilePath = 'agentTemplate.yaml'
         def agentPod=libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
                    .replace('\${MAVEN_IMAGE}',config.build.maven.image)
-                   .replace('\${GRADLE_IMAGE}',config.build.maven.image)
+                   .replace('\${KANIKO_IMAGE}',config.build.kaniko.image)
 
         // Function to replace tokens using a map
 
