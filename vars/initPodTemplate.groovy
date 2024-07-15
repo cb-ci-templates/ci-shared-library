@@ -1,3 +1,15 @@
+def pathExists(Map<String, Object> map, List<String> path) {
+    def current = map
+    for (part in path) {
+        if (current.containsKey(part)) {
+            current = current[part]
+        } else {
+            return false
+        }
+    }
+    return true
+}
+
 def call(Map config) {
     def result=null
     container("yq") {
@@ -18,6 +30,7 @@ def call(Map config) {
         //agentPod = replaceTokens(agentPod, replacements)
         writeYaml file: podTemplateFilePath, data: agentPod
         archiveArtifacts artifacts: '*.yaml', followSymlinks: false
+        // Function to check if a YAML path exists
 
 
         // Check if specific paths exist
@@ -34,18 +47,9 @@ def call(Map config) {
 
 
 
-// Function to check if a YAML path exists
-def pathExists(Map<String, Object> map, List<String> path) {
-    def current = map
-    for (part in path) {
-        if (current.containsKey(part)) {
-            current = current[part]
-        } else {
-            return false
-        }
-    }
-    return true
-}
+
+
+
 
 
 
