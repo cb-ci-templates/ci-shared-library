@@ -17,33 +17,6 @@ def call(Map configDefaults) {
                     }
                 }
             }
-            stage('CD-image-envsubt') {
-                //           parallel {
-                //                stage ("runci"){
-
-                agent {
-                    kubernetes {
-                        //yaml kubernetesPodTemplate(config)
-                        yaml agentYaml
-                        defaultContainer 'maven'
-                        showRawYaml true
-                    }
-                }
-                stages {
-                    stage("deploy") {
-                        steps {
-                            sh "echo deploy "
-                        }
-                    }
-                    stage("test") {
-                        steps {
-                            sh "echo test "
-                        }
-                    }
-                    //                  }
-//                }
-                }
-            }
             stage('CI') {
                 //           parallel {
                 //                stage ("runci"){
@@ -76,11 +49,38 @@ def call(Map configDefaults) {
                                     echo "This is branch a"
                                 }
                             },
-                                    b: {
-                                        container("maven") {
-                                            echo "This is branch b"
-                                        }
-                                    })
+                            b: {
+                                container("maven") {
+                                    echo "This is branch b"
+                                }
+                            })
+                        }
+                    }
+                    //                  }
+//                }
+                }
+            }
+            stage('CD-image-envsubt') {
+                //           parallel {
+                //                stage ("runci"){
+
+                agent {
+                    kubernetes {
+                        //yaml kubernetesPodTemplate(config)
+                        yaml agentYaml
+                        defaultContainer 'maven'
+                        showRawYaml true
+                    }
+                }
+                stages {
+                    stage("deploy") {
+                        steps {
+                            sh "echo deploy "
+                        }
+                    }
+                    stage("test") {
+                        steps {
+                            sh "echo test "
                         }
                     }
                     //                  }
