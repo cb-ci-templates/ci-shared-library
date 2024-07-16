@@ -60,7 +60,7 @@ def call(Map configDefaults) {
 //                }
                 }
             }
-            stage('CD-image-envsubt') {
+            stage('CD') {
                 //           parallel {
                 //                stage ("runci"){
 
