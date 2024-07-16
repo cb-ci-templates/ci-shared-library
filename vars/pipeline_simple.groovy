@@ -18,7 +18,6 @@ def call(Map configDefaults) {
                             //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
                         }
                     }
-
                     container("yq") {
                         writeYaml file: 'ci-config-defaults.yaml', data: libraryResource("json/ci-config-defaults.yaml")
                         sh """
@@ -36,6 +35,7 @@ def call(Map configDefaults) {
                     }
 
                     container("envsubst") {
+
                         writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
                         sh '''
                             ls -la 
@@ -45,6 +45,9 @@ def call(Map configDefaults) {
                             cat tmp-podagent.yaml
                         '''
                         script{
+                            //TODO: Iterate over all config.build.X.images and expose them as ebv vars
+                            env.MAVEN_IMAGE = config.build.maven.image
+                            //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
                             agentYaml = readYaml file: "tmp-podagent.yaml"
                         }
                         sh "echo $agentYaml"
