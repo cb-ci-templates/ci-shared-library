@@ -10,7 +10,8 @@ spec:
       tty: true
       workingDir: "/home/jenkins/agent"
     - name: kaniko
-      image: gcr.io/kaniko-project/executor:debug
+      #image: gcr.io/kaniko-project/executor:debug
+      image: ${KANIKO_IMAGE}
       imagePullPolicy: Always
       command:
         - /busybox/cat
