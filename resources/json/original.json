@@ -1,5 +1,0 @@
-{
-  "app": "Hello World",
-  "branchPropertiesFile": "ci-config.yaml",
-  "dynamicPodTemplateFile": "podTemplate-envsubst-images.yaml"
-}
