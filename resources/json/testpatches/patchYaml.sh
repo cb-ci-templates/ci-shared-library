@@ -30,19 +30,19 @@ PATCHED_ORIGINAL_YAML="$GEN_DIR/$ORIGINAL_YAML"
 yq -o=json e '.' $ORIGINAL_YAML > $ORIGINAL_JSON
 cat $ORIGINAL_JSON
 
-# Apply the JSON patch
+# Read ORIGINAL_JSON_CONTENT JSON
+ORIGINAL_JSON_CONTENT=$(cat "$ORIGINAL_JSON")
+# Apply patch using jq and save patched JSON to file
 jq --argjson patch "$(cat "$PATCH_JSON")" '
-    . as $original |
+    . as $ORIGINAL_JSON_CONTENT |
     reduce $patch[] as $p (
-        $original;
+        $ORIGINAL_JSON_CONTENT;
         .[$p.path | sub("^/"; "")] = $p.value
     )
-' <<< "$ORIGINAL_JSON" >  $PATCHED_ORIGINAL_JSON
-
+' <<< "$ORIGINAL_JSON_CONTENT" > "$PATCHED_ORIGINAL_JSON"
 
 # Convert JSON back to YAML
-yq -o=yaml e '.' $PATCHED_ORIGINAL_JSON > $PATCHED_ORIGINAL_YAML
-
+yq -P -o=yaml . $PATCHED_ORIGINAL_JSON > $PATCHED_ORIGINAL_YAML
 
 echo "Output the patched JSON content"
 cat $PATCHED_ORIGINAL_JSON
