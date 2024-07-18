@@ -1,0 +1,5 @@
+[
+    { "op": "replace", "path": "/dynamicPodTemplateFile", "value": "testfile1" },
+    { "op": "add", "path": "/build", "value": ${BUILD_TASK} }
+]
+
