@@ -11,46 +11,9 @@ def call(Map configDefaults) {
                     }
                 }
                 steps {
-                    container("json-schema-validator") {
-                        script {
-                            config = init configDefaults
-                            env.MAVEN_IMAGE = config.build.maven.image
-                            //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
-                        }
-                    }
-                    container("yq") {
-                        writeYaml file: 'ci-config-defaults.yaml', data: libraryResource("json/ci-config-defaults.yaml")
-                        sh """
-                            cat ci-config-defaults.yaml
-                            cat ${configDefaults.branchPropertiesFile} 
-                            #cat ${configDefaults.branchPropertiesFile} > config-merged.yaml
-                            #cat ci-config-defaults.yaml >> config-merged.yaml
-                            yq eval ${configDefaults.branchPropertiesFile} ci-config-defaults.yaml > config-merged.yaml
-                            sed -i '/---/d' config-merged.yaml
-                            cat config-merged.yaml
-                        """
-                         script {
-                             config = readYaml file: "config-merged.yaml"
-                         }
-                    }
-
-                    container("envsubst") {
-
-                        writeYaml file: 'agent.yaml', data: libraryResource("podtemplates/podTemplate-envsubst-images.yaml")
-                        sh '''
-                            ls -la 
-                            cat agent.yaml
-                            envsubst < agent.yaml > tmp-podagent.yaml
-                            sed -i '1d' tmp-podagent.yaml #workartund
-                            cat tmp-podagent.yaml
-                        '''
-                        script{
-                            //TODO: Iterate over all config.build.X.images and expose them as ebv vars
-                            env.MAVEN_IMAGE = config.build.maven.image
-                            //env.MAVEN_IMAGE="maven:3-amazoncorretto-17"
-                            agentYaml = readYaml file: "tmp-podagent.yaml"
-                        }
-                        sh "echo $agentYaml"
+                    script {
+                        config = init configDefaults
+                        agentYaml = initPodTemplate config
                     }
                 }
             }
@@ -81,31 +44,32 @@ def call(Map configDefaults) {
                     }
                     stage("qa scans") {
                         steps {
-                            parallel(
-                                    a: {
-                                        container("maven") {
-                                            echo "This is branch a"
-                                        }
-                                    },
+                            parallel(a: {
+                                container("maven") {
+                                    echo "This is branch a"
+                                }
+                            },
                                     b: {
                                         container("maven") {
                                             echo "This is branch b"
                                         }
-                                    }
-                            )
+                                    })
                         }
                     }
                     //                  }
 //                }
                 }
             }
-            stage('CD-image-envsubt') {
+            stage('CD') {
                 //           parallel {
                 //                stage ("runci"){
 
                 agent {
                     kubernetes {
+                        //yaml kubernetesPodTemplate(config)
                         yaml agentYaml
+                        defaultContainer 'maven'
+                        showRawYaml true
                     }
                 }
                 stages {
