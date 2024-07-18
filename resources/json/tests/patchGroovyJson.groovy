@@ -13,8 +13,8 @@ import com.github.fge.jsonpatch.JsonPatch
 import com.github.fge.jsonpatch.diff.JsonDiff
 
 // Paths to the JSON files
-def jsonFilePath = 'original.json'
-def patchFilePath = 'patch.json'
+def jsonFilePath = 'ci-config-defaults.json'
+def patchFilePath = 'patches/patch.json'
 
 // Read the JSON files
 def jsonContent = new File(jsonFilePath).text
