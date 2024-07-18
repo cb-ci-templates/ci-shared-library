@@ -8,6 +8,4 @@ build:
   kaniko:
     podyaml: podTemplate-maven.yaml
     image: gcr.io/kaniko-project/executor:debug
-    steps:
-      - "mvn version"
-      - "mvn clean install"
+

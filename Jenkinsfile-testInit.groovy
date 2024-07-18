@@ -4,4 +4,4 @@ library identifier: 'ci-shared-library@main', retriever: modernSCM(
 //Load the defaults
 Map configMap = readYaml text: libraryResource("json/ci-config-defaults.yaml")
 println configMap
-pipeline_simple2 (configMap)
+pipeline_simple (configMap)
