@@ -12,7 +12,6 @@ PATCHED_ORIGINAL="$GEN_DIR/$ORIGINAL_JSON"
 # Read ORIGINAL_JSON_CONTENT JSON
 ORIGINAL_JSON_CONTENT=$(cat "$ORIGINAL_JSON")
 
-# Apply patch using jq
 # Apply patch using jq and save patched JSON to file
 jq --argjson patch "$(cat "$PATCH_JSON")" '
     . as $ORIGINAL_JSON_CONTENT |
