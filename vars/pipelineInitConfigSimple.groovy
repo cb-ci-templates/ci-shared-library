@@ -27,8 +27,10 @@ def call(globalConfig) {
             }
             stage('Build') {
                 steps {
-                    //sh "mvn clean deploy"
-                    sh "mvn -version"
+                    container ("maven") {
+                       //sh "mvn clean deploy"
+                        sh "mvn -version"
+                    }                 
                 }
             }
             // Other stages of your pipeline
