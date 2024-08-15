@@ -7,7 +7,7 @@ library identifier: 'ci-shared-library@main', retriever: modernSCM(
 def configYaml = """---
 app : 'Hello World'
 k8_agent_yaml : 'podTemplate-maven.yaml'
-param_greetings : 'Hello World'
+branchPropertiesFile: 'ci-config.yaml'
 """
 
 Map configMap = readYaml text: "${configYaml}"
