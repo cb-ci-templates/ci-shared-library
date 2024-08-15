@@ -25,6 +25,12 @@ def call(pipelineParams) {
                     echo (config.ciTemplate)
                 }
             }
+            stage('Build') {
+                steps {
+                    //sh "mvn clean deploy"
+                    sh "mvn -version"
+                }
+            }
             // Other stages of your pipeline
         }
     }
