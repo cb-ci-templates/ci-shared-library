@@ -1,12 +1,12 @@
 // my-shared-library/vars/testPipeline.groovy
 
-def call(pipelineParams) {
-    def config=null
+def call(globalConfig) {
+    def mergedConfig=null
 
     pipeline {
         agent {
             kubernetes {
-                yaml libraryResource("podtemplates/${pipelineParams.k8_agent_yaml}")
+                yaml libraryResource("podtemplates/${globalConfig.k8_agent_yaml}")
             }
         }
         stages {
@@ -15,14 +15,14 @@ def call(pipelineParams) {
                     script {
                         script {
                             // Ensure file operations are executed within a node block
-                            config = initFromYaml pipelineParams.branchPropertiesFile
+                            mergedConfig = initFromYaml globalConfig.branchPropertiesFile
                             //config = readYaml file: pipelineParams.branchPropertiesFile
-                            echo "Initializing pipeline with config: ${config}"
+                            echo "Initializing pipeline with config: ${mergedConfig}"
                         }
                     }
                     // Use the configuration from the YAML file
-                    echo "Initializing pipeline with config: ${config}"
-                    echo (config.ciTemplate)
+                    echo "Initializing pipeline with config: ${mergedConfig}"
+                    echo (mergedConfig.ciTemplate)
                 }
             }
             stage('Build') {
