@@ -12,4 +12,4 @@ param_greetings : 'Hello World'
 
 Map configMap = readYaml text: "${configYaml}"
 println configMap
-pipelineHelloWorld (configMap)
+pipeline-init-simple (configMap)
