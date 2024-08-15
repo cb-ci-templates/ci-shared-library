@@ -6,7 +6,7 @@ library identifier: 'ci-shared-library@main', retriever: modernSCM(
 // Building the data object
 def configYaml = """---
 app : 'Hello World'
-k8_agent_yaml : '/podTemplate-maven.yaml'
+k8_agent_yaml : 'podTemplate-maven.yaml'
 param_greetings : 'Hello World'
 """
 
