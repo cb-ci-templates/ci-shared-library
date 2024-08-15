@@ -1,6 +1,7 @@
 
-def call(String configFileName) {
+def call(String configFileName) {    
     def valuesYaml=null
+    sh "ls -la"
     try {
         //Load config
         valuesYaml = readYaml(file: "${configFileName}")
