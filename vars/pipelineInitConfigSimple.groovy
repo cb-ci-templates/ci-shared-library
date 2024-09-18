@@ -27,9 +27,10 @@ def call(globalConfig) {
             }
             stage('Build') {
                 steps {
-                    container ("maven") {
+                    container ("busybox") {
                        //sh "mvn clean deploy"
-                        sh "mvn -version"
+                       //sh "mvn -version"
+                        echo "hello"
                     }                 
                 }
             }
