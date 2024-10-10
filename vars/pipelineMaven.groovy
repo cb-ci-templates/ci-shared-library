@@ -48,8 +48,10 @@ def call(Map configDefaults) {
                                         // or globally to the entire master navigating to  "Manage Jenkins / Global Tools Configuration"
                                         //mavenSettingsConfig: 'global-maven-settings'
                                 ) {
-
-                                    sh config.build.maven.steps[0]
+                                    config.config.build.maven.steps.each { step ->
+                                        sh step
+                                    }
+                                    //sh config.build.maven.steps[0]
                                     //https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/cloudbees-cache-step
                                     //writeCache name: 'maven-repo', includes: '.m2/repository/**', excludes: '**SNAPSHOT**'
                                 }
