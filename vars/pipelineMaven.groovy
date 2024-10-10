@@ -48,7 +48,7 @@ def call(Map configDefaults) {
                                         // or globally to the entire master navigating to  "Manage Jenkins / Global Tools Configuration"
                                         //mavenSettingsConfig: 'global-maven-settings'
                                 ) {
-                                    config.config.build.maven.steps.each { step ->
+                                    config.build.maven.steps.each { step ->
                                         sh step
                                     }
                                     //sh config.build.maven.steps[0]
