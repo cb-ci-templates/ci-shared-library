@@ -41,7 +41,7 @@ def call(Map configDefaults) {
                                 withMaven(
                                         //Use `$WORKSPACE/.repository` for local repository folder to avoid shared repositories
                                         //consider to use CloudBees Workspace caching https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/cloudbees-cache-step
-                                        mavenLocalRepo: '.m2',
+                                        mavenLocalRepo: '/tmp/.m2',
                                         // Maven settings.xml file defined with the Jenkins Config File Provider Plugin
                                         // We recommend to define Maven settings.xml globally at the folder level using
                                         // navigating to the folder configuration in the section "Pipeline Maven Configuration / Override global Maven configuration"
