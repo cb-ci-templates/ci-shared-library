@@ -22,7 +22,7 @@ def call(String jiraToken, Map config=[:]) {
     sh  """
     ls -la
     cat createIssue.json
-    curl -D- -u ${config.JIRA_TOKEN} -X POST --data @createIssue.json -H "Content-Type: application/json" ${config.JIRA_URL}/rest/api/2/issue
+    curl -D- -o createIssueResult.json -u ${config.JIRA_TOKEN} -X POST --data @createIssue.json -H "Content-Type: application/json" ${config.JIRA_URL}/rest/api/2/issue
     """
     archiveArtifacts artifacts: '*.*', followSymlinks: false
 
