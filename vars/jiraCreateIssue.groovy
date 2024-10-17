@@ -1,5 +1,6 @@
-def call(Map config=[:]) {
+def call(jiraUser, jirapw, Map config=[:]) {
     writeYaml file: 'jiraCreateIssue.sh', data: libraryResource("jira/createIssue.sh")
+    def jiraToken="${jiraUser}:${jirapw}"
     sh """
      chmod 755 jiraCreateIssue.sh
      jiraCreateIssue.sh \
@@ -8,6 +9,6 @@ def call(Map config=[:]) {
         ${config.JIRA_DESCRIPTION} \
         ${config.JIRA_SUMMARY} \
         ${config.JIRA_URL} \
-        ${config.JIRA_TOKEN} \
+        ${jiraToken} \
     """
 }
