@@ -1,8 +1,7 @@
 def call(String jiraToken, Map config=[:]) {
-    writeYaml file: 'jiraCreateIssue.sh', data: libraryResource("jira/createIssue.sh")
     config["jiraToken"]=jiraToken
-
     sh """
+    set -x
     cat <<EOF> createIssue.json
     {
        "fields": {
@@ -20,6 +19,7 @@ def call(String jiraToken, Map config=[:]) {
        }
     }
     EOF
+    cat createIssue.json
     curl -D- -u ${config.JIRA_TOKEN} -X POST --data @createIssue.json -H "Content-Type: application/json" ${config.JIRA_URL}/rest/api/2/issue
     """
 
