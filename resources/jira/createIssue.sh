@@ -2,6 +2,8 @@
 
 set -x
 
+echo $@
+
 export JIRA_KEY=${1:-"SCRUM"}
 export JIRA_ISSUE_TYPE=${2:-"Task"}
 export JIRA_DESCRIPTION=${3:-"MY ISSUE DESCRIPTION"}
