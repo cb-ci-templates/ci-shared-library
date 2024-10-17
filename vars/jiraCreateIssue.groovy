@@ -12,6 +12,6 @@ def call(String jiraToken, Map config=[:]) {
         '${config.JIRA_DESCRIPTION}' \
         '${config.JIRA_SUMMARY}' \
         '${config.JIRA_URL}' \
-        '${jiraToken}'
+        '${config.jiraToken}'
     """
 }
