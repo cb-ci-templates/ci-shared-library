@@ -1,5 +1,5 @@
 def call(String jiraToken, Map config=[:]) {
-    config["jiraToken"]=jiraToken
+    config["JIRA_TOKEN"]=jiraToken
     sh """
     set -x
     cat << EOF > createIssue.json
