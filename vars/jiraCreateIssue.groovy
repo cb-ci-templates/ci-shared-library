@@ -18,6 +18,8 @@ def call(String jiraToken, Map config=[:]) {
        }
     }
     EOF
+    """
+    sh  """
     ls -la
     cat createIssue.json
     curl -D- -u ${config.JIRA_TOKEN} -X POST --data @createIssue.json -H "Content-Type: application/json" ${config.JIRA_URL}/rest/api/2/issue
