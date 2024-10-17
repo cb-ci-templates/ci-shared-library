@@ -1,17 +1,26 @@
 def call(String jiraToken, Map config=[:]) {
     writeYaml file: 'jiraCreateIssue.sh', data: libraryResource("jira/createIssue.sh")
     config["jiraToken"]=jiraToken
-    writeYaml file: 'jiraCreateIssueIN.json', data: config
-    sh "cat jiraCreateIssueIN.json"
+
     sh """
-     chmod 755 ./jiraCreateIssue.sh
-     ls -la
-     ./jiraCreateIssue.sh \
-        '${config.JIRA_KEY}' \
-        '${config.JIRA_ISSUE_TYPE}' \
-        '${config.JIRA_DESCRIPTION}' \
-        '${config.JIRA_SUMMARY}' \
-        '${config.JIRA_URL}' \
-        '${config.jiraToken}'
+    cat <<EOF> createIssue.json
+    {
+       "fields": {
+          "project": {
+             "key": "${config.JIRA_KEY}"
+          },
+          "summary": "${config.JIRA_SUMMARY}",
+          "description": "${config.JIRA_DESCRIPTION}",
+          "issuetype": {
+             "name": "${config.JIRA_ISSUE_TYPE}"
+          },
+          "assignee": {
+             "name": "assignee-username"
+          }
+       }
+    }
+    EOF
+    curl -D- -u ${config.JIRA_TOKEN} -X POST --data @createIssue.json -H "Content-Type: application/json" ${config.JIRA_URL}/rest/api/2/issue
     """
+
 }
