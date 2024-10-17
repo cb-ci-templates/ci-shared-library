@@ -6,7 +6,7 @@ export JIRA_KEY=${1:-"SCRUM"}
 export JIRA_ISSUE_TYPE=${2:-"Task"}
 export JIRA_DESCRIPTION=${3:-"MY ISSUE DESCRIPTION"}
 export JIRA_SUMMARY=${4:-"MY ISSUE SUMMARY"}
-export JIRA_URL=${5:-"https://<jira>.atlassian.net/"}
+export JIRA_URL=${5:-"https://jira.atlassian.net/"}
 export JIRA_TOKEN=${6:-"USER:TOKEN}"
 
 cat << EOF > createIssue.json
