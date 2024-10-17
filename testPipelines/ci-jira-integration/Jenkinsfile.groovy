@@ -16,20 +16,20 @@ pipeline {
     agent {
         kubernetes {
             yaml '''
-apiVersion: v1
-kind: Pod
-spec:
-  containers:
-    - name: shell
-      image: curlimages/curl:latest
-      runAsUser: 1000
-      command:
-        - cat
-      tty: true
-      workingDir: "/home/jenkins/agent"
-      securityContext:
-        runAsUser: 1000
-'''
+                apiVersion: v1
+                kind: Pod
+                spec:
+                  containers:
+                    - name: shell
+                      image: curlimages/curl:latest
+                      runAsUser: 1000
+                      command:
+                        - cat
+                      tty: true
+                      workingDir: "/home/jenkins/agent"
+                      securityContext:
+                        runAsUser: 1000
+                '''
             defaultContainer 'shell'
             retries 2
         }
