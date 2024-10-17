@@ -2,7 +2,7 @@ def call(String jiraToken, Map config=[:]) {
     config["jiraToken"]=jiraToken
     sh """
     set -x
-    cat <<EOF> createIssue.json
+    cat << EOF > createIssue.json
     {
        "fields": {
           "project": {
@@ -20,7 +20,8 @@ def call(String jiraToken, Map config=[:]) {
     }
     EOF
     cat createIssue.json
-    curl -D- -u ${config.JIRA_TOKEN} -X POST --data @createIssue.json -H "Content-Type: application/json" ${config.JIRA_URL}/rest/api/2/issue
+    curl -D- -o createIssueResponse.json -u ${config.JIRA_TOKEN} -X POST --data @createIssue.json -H "Content-Type: application/json" ${config.JIRA_URL}/rest/api/2/issue
+    archiveArtifacts artifacts: '*.*', followSymlinks: false
     """
 
 }
