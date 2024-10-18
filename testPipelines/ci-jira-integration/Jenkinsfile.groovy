@@ -38,7 +38,7 @@ spec:
         stage('Main') {
             steps {
                 container ("shell"){
-                    jiraComment body: 'This is my test comment', issueKey: configMap.JIRA_KEY
+                    jiraComment body: 'This is my test comment1', issueKey: configMap.JIRA_KEY
                     jiraCreateIssue configMap
                     //step([$class: 'JiraVersionCreatorBuilder', jiraProjectKey: "${configMap.JIRA_KEY}", jiraVersion: 'newversion'])
                 }
