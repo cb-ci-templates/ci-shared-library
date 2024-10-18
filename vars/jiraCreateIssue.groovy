@@ -1,6 +1,7 @@
-def call(String jiraToken, Map config=[:]) {
-    config["JIRA_TOKEN"]=jiraToken
-    sh """
+def call(Map config=[:]) {
+    withCredentials([usernamePassword(credentialsId: 'jira-user-token', passwordVariable: 'JIRA_PW', usernameVariable: 'JIRA_USER')]) {
+
+        sh """
 cat <<EOF > createIssue.json
 {
    "fields": {
@@ -18,12 +19,16 @@ cat <<EOF > createIssue.json
    }
 }
 EOF
-    """
-    sh  """
-    ls -la
-    cat createIssue.json
-    curl -D- -o createIssueResult.json -u ${config.JIRA_TOKEN} -X POST --data @createIssue.json -H "Content-Type: application/json" ${config.JIRA_URL}/rest/api/2/issue
-    """
-    archiveArtifacts artifacts: '*.*', followSymlinks: false
+        """
+
+
+        def jiraToken="${JIRA_USER}:${JIRA_PW}"
+        sh """
+        ls -la
+        cat createIssue.json
+        curl -D- -o createIssueResult.json -u ${jiraToken} -X POST --data @createIssue.json -H "Content-Type: application/json" ${config.JIRA_URL}/rest/api/2/issue
+        """
+        archiveArtifacts artifacts: '*.*', followSymlinks: false
+    }
 
 }
