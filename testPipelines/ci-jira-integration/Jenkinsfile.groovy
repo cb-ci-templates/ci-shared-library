@@ -6,8 +6,8 @@ library identifier: 'ci-shared-library@main', retriever: modernSCM(
 def configYaml = """---
 JIRA_KEY : 'SCRUM'
 JIRA_ISSUE_TYPE : 'Task'
-JIRA_DESCRIPTION: 'TEST'
-JIRA_SUMMARY: 'TEST'
+JIRA_DESCRIPTION: 'TEST1'
+JIRA_SUMMARY: 'TEST2'
 JIRA_URL: 'https://cloudbees-acaternberg-test.atlassian.net/'
 """
 Map configMap = readYaml text: "${configYaml}"
@@ -16,20 +16,20 @@ pipeline {
     agent {
         kubernetes {
             yaml '''
-                apiVersion: v1
-                kind: Pod
-                spec:
-                  containers:
-                    - name: shell
-                      image: curlimages/curl:latest
-                      runAsUser: 1000
-                      command:
-                        - cat
-                      tty: true
-                      workingDir: "/home/jenkins/agent"
-                      securityContext:
-                        runAsUser: 1000
-                '''
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+    - name: shell
+      image: curlimages/curl:latest
+      runAsUser: 1000
+      command:
+        - cat
+      tty: true
+      workingDir: "/home/jenkins/agent"
+      securityContext:
+        runAsUser: 1000
+'''
             defaultContainer 'shell'
             retries 2
         }
@@ -39,10 +39,7 @@ pipeline {
             steps {
                 container ("shell"){
                     jiraComment body: 'This is my test comment', issueKey: configMap.JIRA_KEY
-                    withCredentials([usernamePassword(credentialsId: 'jira-user-token', passwordVariable: 'JIRA_PW', usernameVariable: 'JIRA_USER')]) {
-                        jiraCreateIssue ("${JIRA_USER}:${JIRA_PW}",configMap)
-                    }
-
+                    jiraCreateIssue configMap
                     //step([$class: 'JiraVersionCreatorBuilder', jiraProjectKey: "${configMap.JIRA_KEY}", jiraVersion: 'newversion'])
                 }
             }
