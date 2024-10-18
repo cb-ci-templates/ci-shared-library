@@ -12,24 +12,26 @@ JIRA_URL: 'https://cloudbees-acaternberg-test.atlassian.net/'
 """
 Map configMap = readYaml text: "${configYaml}"
 println configMap
+
+
 pipeline {
     agent {
         kubernetes {
             yaml '''
-apiVersion: v1
-kind: Pod
-spec:
-  containers:
-    - name: shell
-      image: curlimages/curl:latest
-      runAsUser: 1000
-      command:
-        - cat
-      tty: true
-      workingDir: "/home/jenkins/agent"
-      securityContext:
-        runAsUser: 1000
-'''
+                apiVersion: v1
+                kind: Pod
+                spec:
+                  containers:
+                    - name: shell
+                      image: curlimages/curl:latest
+                      runAsUser: 1000
+                      command:
+                        - cat
+                      tty: true
+                      workingDir: "/home/jenkins/agent"
+                      securityContext:
+                        runAsUser: 1000
+                '''
             defaultContainer 'shell'
             retries 2
         }
@@ -38,9 +40,14 @@ spec:
         stage('Main') {
             steps {
                 container ("shell"){
-                    jiraComment body: 'This is my test comment1', issueKey: configMap.JIRA_KEY
+                    //Create an issue
                     jiraCreateIssue configMap
-                    //step([$class: 'JiraVersionCreatorBuilder', jiraProjectKey: "${configMap.JIRA_KEY}", jiraVersion: 'newversion'])
+
+                    //Add a comment
+                    //TODO: use jq to get the issueKey from the created ticket
+                    //For now we use a static issueKey. Ensure the issueKey exist
+                    jiraComment body: 'This is my test comment', issueKey: 'SCRUM-1'
+
                 }
             }
         }
