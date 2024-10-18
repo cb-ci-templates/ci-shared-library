@@ -22,11 +22,11 @@ EOF
         """
 
 
-        def jiraToken="${JIRA_USER}:${JIRA_PW}"
+        //def jiraToken="${JIRA_USER}:${JIRA_PW}"
         sh """
         ls -la
         cat createIssue.json
-        curl -D- -o createIssueResult.json -u ${jiraToken} -X POST --data @createIssue.json -H "Content-Type: application/json" ${config.JIRA_URL}/rest/api/2/issue
+        curl -D- -o createIssueResult.json -u "${JIRA_USER}:${JIRA_PW}" -X POST --data @createIssue.json -H "Content-Type: application/json" ${config.JIRA_URL}/rest/api/2/issue
         """
         archiveArtifacts artifacts: '*.*', followSymlinks: false
     }
