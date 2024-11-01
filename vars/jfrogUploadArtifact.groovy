@@ -4,12 +4,7 @@ def call(Map config=[:]) {
     withCredentials([string(credentialsId: 'jfrog-user-token', variable: 'API_TOKEN')]) {
 
         sh """
-            export FILE_PATH=${config.FILE_PATH}
-            export ARTIFACTORY_URL=${config.ARTIFACTORY_URL}
-            export REPO_NAME=${config.REPO_NAME}
-            export ARTIFACT_PATH=${config.ARTIFACT_PATH}
-            
-            curl -H "Authorization: Bearer ${API_TOKEN}" -T ${FILE_PATH} "${ARTIFACTORY_URL}/artifactory/${REPO_NAME}/${ARTIFACT_PATH}"
+            curl -H "Authorization: Bearer ${API_TOKEN}" -T "${config.FILE_PATH}" "${config.ARTIFACTORY_URL}/artifactory/${config.REPO_NAME}/${config.ARTIFACT_PATH}"
         """
     }
 
