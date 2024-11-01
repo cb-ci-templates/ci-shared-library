@@ -1,7 +1,7 @@
 package vars
 
 def call(Map config=[:]) {
-    withCredentials([usernamePassword(credentialsId: 'jfrog-user-token', variable: 'API_TOKEN')]) {
+    withCredentials([string(credentialsId: 'jfrog-user-token', variable: 'API_TOKEN')]) {
 
         sh """\
             export FILE_PATH=${config.FILE_PATH}
