@@ -10,18 +10,18 @@ INSECURE_SKIP_TLS_VERIFY="${config.SKIP_TLS_VERIFY}"
 IMAGE_REGISTRY="${config.IMAGE_REGISTRY}"
 IMAGE_NAME="${config.IMAGE_NAME}"
 
-curl -s -k -L -H "Authorization: Bearer ${ROX_API_TOKEN}" \\
-  "https://${ROX_CENTRAL_ENDPOINT}/api/cli/download/roxctl-linux" \\
+curl -s -k -L -H "Authorization: Bearer ${env.ROX_API_TOKEN}" \\
+  "https://${env.ROX_CENTRAL_ENDPOINT}/api/cli/download/roxctl-linux" \\
   --output ./roxctl  \\
   > /dev/null
 
 chmod +x ./roxctl  > /dev/null
 
-if [ "${INSECURE_SKIP_TLS_VERIFY}" = "true" ]; then
+if [ "${env.INSECURE_SKIP_TLS_VERIFY}" = "true" ]; then
   export ROX_INSECURE_CLIENT_SKIP_TLS_VERIFY=true
 fi
 
-./roxctl image scan -e "${ROX_CENTRAL_ENDPOINT}" --image "${IMAGE_REGISTRY}/${IMAGE_NAME}"
+./roxctl image scan -e "${env.ROX_CENTRAL_ENDPOINT}" --image "${env.IMAGE_REGISTRY}/${env.IMAGE_NAME}"
         """
     }
 
