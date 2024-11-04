@@ -3,8 +3,12 @@ package vars
 def call(Map config=[:]) {
     withCredentials([string(credentialsId: 'roxctl-user-token', variable: 'ROX_API_TOKEN')]) {
         sh """
+
+arch="$(uname -m | sed "s/x86_64//" | sed "s/aarch/arm/")"; arch="${arch:+-$arch}"
+#curl -L -f -o roxctl "https://mirror.openshift.com/pub/rhacs/assets/4.5.4/bin/Linux/roxctl${arch}"
+
 curl -s -k -L -H "Authorization: Bearer ${ROX_API_TOKEN}" \\
-  "https://${config.ENDPOINT}/api/cli/download/roxctl-linux" \\
+  "https://${config.ENDPOINT}/api/cli/download/roxctl-linux${arch}" \\
   --output ./roxctl  \\
   > /dev/null
 
