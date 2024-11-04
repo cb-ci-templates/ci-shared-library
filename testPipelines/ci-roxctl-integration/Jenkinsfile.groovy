@@ -4,7 +4,7 @@ library identifier: 'ci-shared-library@main', retriever: modernSCM(
 
 // Building the data object
 def configYaml = """---
-ENDPOINT: 'central-stackrox.apps.ocp.aws.ispworld.at:443'
+ENDPOINT: 'test.end.point:443'
 SKIP_TLS_VERIFY: 'true'
 IMAGE_REGISTRY: 'docker.io'
 IMAGE_NAME: 'curlimages/curl:latest'
