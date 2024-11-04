@@ -14,7 +14,7 @@ if [ "${config.SKIP_TLS_VERIFY}" = "true" ]; then
   export ROX_INSECURE_CLIENT_SKIP_TLS_VERIFY=true
 fi
 
-head -n 1 ./roxctl
+md5sum roxctl
 
 ./roxctl version
 
