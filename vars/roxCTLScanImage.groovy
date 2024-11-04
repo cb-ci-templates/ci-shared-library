@@ -14,8 +14,6 @@ if [ "${config.SKIP_TLS_VERIFY}" = "true" ]; then
   export ROX_INSECURE_CLIENT_SKIP_TLS_VERIFY=true
 fi
 
-md5sum roxctl
-
 ./roxctl version
 
 ./roxctl image scan -e "${config.ENDPOINT}" --image "${config.IMAGE_REGISTRY}/${config.IMAGE_NAME}"
