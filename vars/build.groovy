@@ -23,6 +23,6 @@ def call (Map config){
             //writeCache name: 'maven-repo', includes: '.m2/repository/**', excludes: '**SNAPSHOT**'
         }
         junit '**/target/surefire-reports/TEST-*.xml'
-        archiveArtifacts '**/target/*.jar'
+        archiveArtifacts '**/target/*.war'
     }
 }
