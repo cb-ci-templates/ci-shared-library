@@ -11,9 +11,9 @@ def call (Map config){
                 // or globally to the entire master navigating to  "Manage Jenkins / Global Tools Configuration"
                 //mavenSettingsConfig: 'global-maven-settings'
         ) {
-            //sh config.build.maven.steps[1]
+            //sh config.ci.maven.steps[1]
             script {
-                config.build.maven.steps.collect { step ->
+                config.ci.steps.collect { step ->
                     println step
                     sh step
                 }

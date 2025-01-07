@@ -1,4 +1,3 @@
-
 def call(Map configDefaults) {
     Map config = [:]
     def agentYaml = null
@@ -20,7 +19,7 @@ def call(Map configDefaults) {
                 steps {
                     script {
                         config = init configDefaults
-                        agentYaml = initPodTemplate config
+                        //agentYaml = initPodTemplate config
                     }
                 }
             }
@@ -28,7 +27,7 @@ def call(Map configDefaults) {
                 agent {
                     kubernetes {
                         //use the yaml file ref from ci-user-config
-                        yaml libraryResource("podtemplates/${config.build.maven.podyaml}")
+                        yaml libraryResource("podtemplates/${config.ci.maven.podyaml}")
                         //use the calculated agent
                         //yaml agentYaml
                     }
@@ -47,13 +46,14 @@ def call(Map configDefaults) {
                             skipDefaultCheckout(true)
                         }
                         steps {
-                            container(name: 'kaniko', shell: '/busybox/sh') {
+                            kaniko config ${GIT_COMMIT_SHORT}
+                          /*  container(name: 'kaniko', shell: '/busybox/sh') {
                                 withEnv(['PATH+EXTRA=/busybox:/kaniko']) {
                                     sh '''#!/busybox/sh
                           /kaniko/executor  --dockerfile $(pwd)/Dockerfile --insecure --skip-tls-verify --cache=false  --context $(pwd) --destination caternberg/spring-boot-demo:${GIT_COMMIT_SHORT}
                       '''
                                 }
-                            }
+                            } */
                         }
                     }
                     stage("test") {
@@ -68,11 +68,11 @@ def call(Map configDefaults) {
                                     echo "This is branch a"
                                 }
                             },
-                            b: {
-                                container("maven") {
-                                    echo "This is branch b"
-                                }
-                            })
+                                    b: {
+                                        container("maven") {
+                                            echo "This is branch b"
+                                        }
+                                    })
                         }
                     }
                 }
