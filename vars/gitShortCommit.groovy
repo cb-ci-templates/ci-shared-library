@@ -5,5 +5,5 @@ def call(size) {
     env.COMMIT_AUTHOR = sh(returnStdout: true, script: "git --no-pager show -s --format='%an' ${SHORT_COMMIT} | tr -d '\n'")
     sh "echo SHORT_COMMIT: ${env.SHORT_COMMIT}"
     sh "echo COMMIT_AUTHOR: ${env.COMMIT_AUTHOR}"
-    sh "env |sort"
+    //sh "env |sort"
 }
