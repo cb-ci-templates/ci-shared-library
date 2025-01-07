@@ -19,7 +19,7 @@ def call(Map configDefaults) {
                 steps {
                     script {
                         config = init configDefaults
-                        //agentYaml = initPodTemplate config
+                        agentYaml = initPodTemplate config
                     }
                 }
             }
@@ -56,16 +56,18 @@ def call(Map configDefaults) {
                     }
                     stage("qa scans") {
                         steps {
-                            parallel(a: {
+                            parallel(
+                                    a: {
                                 container("maven") {
                                     echo "This is branch a"
-                                }
+                                    }
                             },
                                     b: {
                                         container("maven") {
                                             echo "This is branch b"
                                         }
-                                    })
+                                    }
+                            )
                         }
                     }
                 }
