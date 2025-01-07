@@ -27,7 +27,7 @@ def call(Map configDefaults) {
                 agent {
                     kubernetes {
                         //use the yaml file ref from ci-user-config
-                        yaml libraryResource("podtemplates/${config.ci.maven.podyaml}")
+                        yaml libraryResource("podtemplates/${config.ci.podyaml}")
                         //use the calculated agent
                         //yaml agentYaml
                     }
