@@ -5,7 +5,7 @@ def call(config) {
             sh label: 'kanikoPrepareConfig', script: '''
                 cp ${DOCKER_CONFIG_JSON_FILE} ${DOCKER_CONFIG}/config.json
             '''
-            echo "Deploy to  : ${config.ci.kaniko.registry}/${config.ci.kaniko.application_image}:${image_tag}"
+            echo "Deploy to  : ${config.ci.kaniko.registry}/${config.ci.kaniko.application_image}:${SHORT_COMMIT}"
             //expose SHORT_COMMIT
             gitShortCommit 7
             sh label: 'kanikoBuildAndPush', script: """              
@@ -15,7 +15,7 @@ def call(config) {
                 --destination ${config.ci.kaniko.registry}/${config.ci.kaniko.application_image}:${SHORT_COMMIT} \
                 --destination ${config.ci.kaniko.registry}/${config.ci.kaniko.application_image}:latest #\
 
-                #--destination ${config.ci.kaniko.registry_deploy}/${config.ci.kaniko.application_image}:${image_tag} #\
+                #--destination ${config.ci.kaniko.registry_deploy}/${config.ci.kaniko.application_image}:${SHORT_COMMIT} #\
                 #--build-arg HTTP_PROXY=${proxyUrl} \
                 #--build-arg HTTPS_PROXY=${proxyUrl} \
                 #--build-arg http_proxy=${proxyUrl} \
