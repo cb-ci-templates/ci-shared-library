@@ -13,8 +13,8 @@ def call(config) {
             echo "Deploy to  : ${config.ci.kaniko.registry}/${config.ci.kaniko.application_image}:${SHORT_COMMIT}"
 
             sh label: 'kanikoBuildAndPush', script: """              
-                export https_proxy="${config.ci.https_proxy}"
-                export no_proxy="${config.ci.no_proxy}"
+                #export https_proxy="${config.ci.https_proxy}"
+                #export no_proxy="${config.ci.no_proxy}"
                 /kaniko/executor  --dockerfile Dockerfile --insecure --skip-tls-verify --cache=false  --context . \
                 --destination ${config.ci.kaniko.registry}/${config.ci.kaniko.application_image}:${SHORT_COMMIT} \
                 --destination ${config.ci.kaniko.registry}/${config.ci.kaniko.application_image}:latest #\
