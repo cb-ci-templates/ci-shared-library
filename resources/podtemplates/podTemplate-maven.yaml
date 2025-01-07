@@ -21,18 +21,18 @@ spec:
       command:
         - /busybox/cat
       tty: true
-      volumeMounts:
-        - name: jenkins-docker-cfg
-          mountPath: /kaniko/.docker
+#      volumeMounts:
+#        - name: jenkins-docker-cfg
+#          mountPath: /kaniko/.docker
   volumes:
     - name: maven-cache
       persistentVolumeClaim:
         claimName: maven-repo
-    - name: jenkins-docker-cfg
-      projected:
-        sources:
-          - secret:
-              name: docker-credentials
-              items:
-                - key: .dockerconfigjson
-                  path: config.json
+#    - name: jenkins-docker-cfg
+#      projected:
+#        sources:
+#          - secret:
+#              name: docker-credentials
+#              items:
+#                - key: .dockerconfigjson
+#                  path: config.json
