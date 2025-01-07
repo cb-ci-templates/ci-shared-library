@@ -46,14 +46,7 @@ def call(Map configDefaults) {
                             skipDefaultCheckout(true)
                         }
                         steps {
-                            kaniko (config ,"${GIT_COMMIT_SHORT}")
-                          /*  container(name: 'kaniko', shell: '/busybox/sh') {
-                                withEnv(['PATH+EXTRA=/busybox:/kaniko']) {
-                                    sh '''#!/busybox/sh
-                          /kaniko/executor  --dockerfile $(pwd)/Dockerfile --insecure --skip-tls-verify --cache=false  --context $(pwd) --destination caternberg/spring-boot-demo:${GIT_COMMIT_SHORT}
-                      '''
-                                }
-                            } */
+                            kaniko config
                         }
                     }
                     stage("test") {
