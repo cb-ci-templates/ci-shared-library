@@ -46,7 +46,7 @@ def call(Map configDefaults) {
                             skipDefaultCheckout(true)
                         }
                         steps {
-                            kaniko config ${GIT_COMMIT_SHORT}
+                            kaniko (config ,"${GIT_COMMIT_SHORT}")
                           /*  container(name: 'kaniko', shell: '/busybox/sh') {
                                 withEnv(['PATH+EXTRA=/busybox:/kaniko']) {
                                     sh '''#!/busybox/sh
