@@ -36,7 +36,7 @@ def call(Map configDefaults) {
                 stages {
                     stage("build") {
                         steps {
-                            build comfig
+                            build config
                         }
                     }
                     stage("Image") {
