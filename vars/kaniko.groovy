@@ -20,10 +20,10 @@ def call(config) {
                 --destination ${config.ci.kaniko.registry}/${config.ci.kaniko.application_image}:latest #\
 
                 #--destination ${config.ci.kaniko.registry_deploy}/${config.ci.kaniko.application_image}:${SHORT_COMMIT} #\
-                #--build-arg HTTP_PROXY=${proxyUrl} \
-                #--build-arg HTTPS_PROXY=${proxyUrl} \
-                #--build-arg http_proxy=${proxyUrl} \
-                #--build-arg https_proxy=${proxyUrl}
+                #--build-arg HTTP_PROXY=${config.ci.https_proxy} \
+                #--build-arg HTTPS_PROXY=${config.ci.https_proxy} \
+                #--build-arg http_proxy=${config.ci.https_proxy} \
+                #--build-arg https_proxy=${config.ci.https_proxy}
                 #--build-arg NO_PROXY=gcr.io,*.gcr.io \
                 #--build-arg no_proxy=gcr.io,*.gcr.io
              """
