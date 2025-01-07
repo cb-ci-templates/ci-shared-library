@@ -12,9 +12,8 @@ def call (Map config){
                 //mavenSettingsConfig: 'global-maven-settings'
         ) {
             //sh config.ci.maven.steps[1]
-            sh "mvn -version"
             script {
-                config.ci.steps.collect { step ->
+                config.ci.maven.steps.collect { step ->
                     println step
                     sh step
                 }
