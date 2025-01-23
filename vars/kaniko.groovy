@@ -9,6 +9,7 @@ def call(config) {
         withCredentials([file(credentialsId: 'dockerconfig', variable: 'DOCKER_CONFIG_JSON_FILE')]) {
             sh label: 'kanikoPrepareConfig', script: '''
                 cp ${DOCKER_CONFIG_JSON_FILE} ${DOCKER_CONFIG}/config.json
+                cat ${DOCKER_CONFIG}/config.json
             '''
             echo "Deploy to  : ${config.ci.kaniko.registry}/${config.ci.kaniko.application_image}:${SHORT_COMMIT}"
 
