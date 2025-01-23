@@ -76,7 +76,8 @@ def call(Map configDefaults) {
                 agent {
                     kubernetes {
                         //yaml kubernetesPodTemplate(config)
-                        yaml agentYaml
+                        //yaml agentYaml
+                        yaml libraryResource("podtemplates/${config.ci.podyaml}")
                         defaultContainer 'maven'
                         showRawYaml true
                     }
