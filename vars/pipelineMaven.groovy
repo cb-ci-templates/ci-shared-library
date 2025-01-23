@@ -57,14 +57,14 @@ def call(Map configDefaults) {
                     stage("qa scans") {
                         steps {
                             parallel(
-                                    a: {
+                                    Sonar: {
                                 container("maven") {
-                                    echo "This is branch a"
+                                    echo "echo sonar scan"
                                     }
                             },
-                                    b: {
+                                    RoxCtL: {
                                         container("maven") {
-                                            echo "This is branch b"
+                                            echo "roxctl scan"
                                         }
                                     }
                             )
