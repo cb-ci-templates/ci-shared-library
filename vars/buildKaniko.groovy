@@ -1,6 +1,6 @@
-def call(config) {
-    //jnlp has git installed
-    container("jnlp"){
+def call (Map config) {
+//jnlp has git installed
+    container("jnlp") {
         //expose SHORT_COMMIT
         gitShortCommit 7
     }
