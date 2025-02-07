@@ -17,9 +17,9 @@ def call(Map configDefaults) {
                     }
                 }
                 steps {
+                    //TODO remove script
                     script {
                         config = init configDefaults
-                        //agentYaml = initPodTemplate config
                     }
                 }
             }
@@ -28,25 +28,22 @@ def call(Map configDefaults) {
                     kubernetes {
                         //use the yaml file ref from ci-user-config
                         yaml libraryResource("podtemplates/${config.ci.podyaml}")
-                        //use the calculated agent
-                        //yaml agentYaml
+                        //TODO: RENAME DEFAULT CONTAONER
+                        defaultContainer "maven"
                     }
                 }
                 stages {
                     stage("build") {
                         steps {
-                            build config
+                            routerBuild config
                         }
                     }
                     stage("Image") {
                         when {
                             branch 'main'
                         }
-                        options {
-                            skipDefaultCheckout(true)
-                        }
                         steps {
-                            kaniko config
+                            routerBuildImage config
                         }
                     }
                     stage("test") {

@@ -1,5 +1,4 @@
-def call (Map config){
-    container("maven") {
+def call (Map config) {
         //https://plugins.jenkins.io/pipeline-maven/
         withMaven(
                 //Use `$WORKSPACE/.repository` for local repository folder to avoid shared repositories
@@ -24,5 +23,4 @@ def call (Map config){
         }
         junit '**/target/surefire-reports/TEST-*.xml'
         archiveArtifacts '**/target/*.war'
-    }
 }

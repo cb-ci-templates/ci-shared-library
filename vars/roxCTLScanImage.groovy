@@ -1,4 +1,4 @@
-package vars
+Cpackage vars
 
 def call(Map config=[:]) {
     withCredentials([string(credentialsId: 'roxctl-user-token', variable: 'ROX_API_TOKEN')]) {
