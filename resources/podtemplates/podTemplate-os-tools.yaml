@@ -5,6 +5,9 @@ spec:
   containers:
     - name: custom-agent
       image: caternberg/jenkins-agent-customized:latest
+      envFrom:
+        - configMapRef:
+            name: configmap-envvars
       runAsUser: 1000
       command:
         - cat

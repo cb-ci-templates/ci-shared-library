@@ -5,6 +5,9 @@ spec:
   containers:
     - name: sonarscanner
       image: sonarsource/sonar-scanner-cli
+      envFrom:
+        - configMapRef:
+            name: configmap-envvars
       runAsUser: 1000
       command:
         - cat
