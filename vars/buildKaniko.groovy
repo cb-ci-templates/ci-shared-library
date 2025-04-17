@@ -14,9 +14,9 @@ def call (Map config) {
             '''
             echo "Deploy to  : ${config.ci.kaniko.registry}/${config.ci.kaniko.application_image}:${SHORT_COMMIT}"
             def kanikoProxy=""
-            def http_proxy=System.getenv('HTTPS_PROXY')
-            if (http_proxy) {
-                kanikoProxy=" --build-arg HTTP_PROXY=${http_proxy} --build-arg HTTPS_PROXY=${http_proxy}  --build-arg http_proxy=${http_proxy}  --build-arg https_proxy=${http_proxy} "
+            if (env.HTTPS_PROXY) {
+                kanikoProxy=" --build-arg HTTP_PROXY=${env.HTTPS_PROXY} --build-arg HTTPS_PROXY=${env.HTTPS_PROXY}  --build-arg http_proxy=${env.HTTPS_PROXY}  --build-arg https_proxy=${env.HTTPS_PROXY} "
+                println kanikoProxy
             }
             sh label: 'kanikoBuildAndPush', script: """              
                 #export https_proxy="${config.ci.https_proxy}"
