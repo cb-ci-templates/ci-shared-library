@@ -19,10 +19,10 @@ def call (Map config) {
                 println kanikoProxy
             }
             sh label: 'kanikoBuildAndPush', script: """   
-                env  |grep -i proxy |sprt           
+                env  |grep -i proxy |sort           
                 export https_proxy="${env.https_proxy}"
                 export no_proxy="${env.no_proxy}"
-                env  |grep -i proxy |sprt 
+                env  |grep -i proxy |sort 
                 /kaniko/executor  --dockerfile Dockerfile --insecure --skip-tls-verify --cache=false  --context . \
                 --destination ${config.ci.kaniko.registry}/${config.ci.kaniko.application_image}:${SHORT_COMMIT} \
                 --destination ${config.ci.kaniko.registry}/${config.ci.kaniko.application_image}:latest #\
