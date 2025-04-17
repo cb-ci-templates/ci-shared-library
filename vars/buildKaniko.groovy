@@ -6,7 +6,7 @@ def call (Map config) {
     }
     env.DOCKER_CONFIG = "/kaniko/.docker"
     container(name: 'kaniko', shell: '/busybox/sh') {
-        //withCredentials([file(credentialsId: 'dockerconfig', variable: 'DOCKER_CONFIG_JSON_FILE')]) {
+        // credentialsId: dockerconfig -  dockerconfig.json as "secret text" credentials
         withCredentials([string(credentialsId: 'dockerconfig', variable: 'DOCKER_CONFIG_JSON')]) {
             sh label: 'kanikoPrepareConfig', script: '''
                 echo ${DOCKER_CONFIG_JSON} > ${DOCKER_CONFIG}/config.json
