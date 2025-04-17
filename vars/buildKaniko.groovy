@@ -14,12 +14,12 @@ def call (Map config) {
             '''
             echo "Deploy to  : ${config.ci.kaniko.registry}/${config.ci.kaniko.application_image}:${SHORT_COMMIT}"
             sh label: 'kanikoBuildAndPush', script: """          
-                #export https_proxy="${env.https_proxy}"
-                #export no_proxy="${env.no_proxy}"
+                #export https_proxy="http://YOURPROXYHOST:PORT"
+                #export no_proxy="your no proxy list"
                 /kaniko/executor  --dockerfile Dockerfile --insecure --skip-tls-verify --cache=false  --context . \
                 --destination ${config.ci.kaniko.registry}/${config.ci.kaniko.application_image}:${SHORT_COMMIT} \
                 --destination ${config.ci.kaniko.registry}/${config.ci.kaniko.application_image}:latest #\
-                # ${kanikoProxy} 
+
                 #--destination ${config.ci.kaniko.registry_deploy}/${config.ci.kaniko.application_image}:${SHORT_COMMIT} #\
                 #--build-arg HTTP_PROXY=${config.ci.https_proxy} \
                 #--build-arg HTTPS_PROXY=${config.ci.https_proxy} \
