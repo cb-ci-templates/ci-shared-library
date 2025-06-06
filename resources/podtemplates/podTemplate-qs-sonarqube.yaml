@@ -8,6 +8,7 @@ spec:
       envFrom:
         - configMapRef:
             name: configmap-envvars
+            optional: true
       runAsUser: 1000
       command:
         - cat

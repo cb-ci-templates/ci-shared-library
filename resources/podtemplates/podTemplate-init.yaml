@@ -9,6 +9,7 @@ spec:
       envFrom:
         - configMapRef:
             name: configmap-envvars
+            optional: true
       command:
         - sleep
       args:
@@ -23,6 +24,7 @@ spec:
       envFrom:
         - configMapRef:
             name: configmap-envvars
+            optional: true
       command:
         - sleep
       args:
@@ -37,6 +39,7 @@ spec:
       envFrom:
         - configMapRef:
             name: configmap-envvars
+            optional: true
       command:
         - sleep
       args:

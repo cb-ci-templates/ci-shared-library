@@ -8,6 +8,7 @@ spec:
       envFrom:
         - configMapRef:
             name: configmap-envvars
+            optional: true
       command:
         - cat
       tty: true
@@ -18,6 +19,7 @@ spec:
       envFrom:
         - configMapRef:
             name: configmap-envvars
+            optional: true
       imagePullPolicy: Always
       command:
         - /busybox/cat

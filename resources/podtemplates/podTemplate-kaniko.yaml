@@ -9,6 +9,7 @@ spec:
       envFrom:
         - configMapRef:
             name: configmap-envvars
+            optional: true
       command:
         - /busybox/cat
       tty: true
