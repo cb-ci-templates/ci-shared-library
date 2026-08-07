@@ -6,6 +6,10 @@ spec:
   containers:
     - name: json-schema-validator
       image: 3scale/ajv
+      envFrom:
+        - configMapRef:
+            name: configmap-envvars
+            optional: true
       command:
         - sleep
       args:
@@ -17,6 +21,10 @@ spec:
     - name: envsubst
       #image: mikefarah/yq
       image: dibi/envsubst
+      envFrom:
+        - configMapRef:
+            name: configmap-envvars
+            optional: true
       command:
         - sleep
       args:
@@ -28,6 +36,10 @@ spec:
     - name: yq
       image: caternberg/curl-yq-jq-git:1.3
       #image: mikefarah/yq
+      envFrom:
+        - configMapRef:
+            name: configmap-envvars
+            optional: true
       command:
         - sleep
       args:

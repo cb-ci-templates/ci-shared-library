@@ -8,7 +8,7 @@ def call (Map config) {
                 // We recommend to define Maven settings.xml globally at the folder level using
                 // navigating to the folder configuration in the section "Pipeline Maven Configuration / Override global Maven configuration"
                 // or globally to the entire master navigating to  "Manage Jenkins / Global Tools Configuration"
-                //mavenSettingsConfig: 'global-maven-settings'
+                mavenSettingsConfig: 'my-maven-settings'
         ) {
             //sh config.ci.maven.steps[1]
             script {
